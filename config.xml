@@ -4,21 +4,45 @@
 	id		= "com.penavicotj.mobile"
 	version 	= "1.0.0">
 
-	<name>PhoneGap: Getting Started</name>
-
+	<name>天津外代船务平台</name>
 	<description>
-		A template for getting started with PhoneGap development and build.phonegap.com
+		天津外代船代业务滚动互动管理平台移动版
 	</description>
 
-	<author href="http://alunny.github.com"
-		email="andrew.lunny@nitobi.com">
-		Andrew Lunny
+	<author href="http://www.wztnet.com" email="wenner.cn@gmail.com">
+		Wenner
 	</author>
 
-	<icon src="icon.png" gap:role="default" />
+	<icon src="images/icon.png" gap:role="default" />
+<!-- 
+	<icon src="icons/android/ldpi.png" gap:platform="android" gap:density="ldpi" />
+	<icon src="icons/android/mdpi.png" gap:platform="android" gap:density="mdpi" />
+	<icon src="icons/android/hdpi.png" gap:platform="android" gap:density="hdpi" />
+ -->
 
+	<gap:splash src="images/splash.png" />
+<!-- 
+	<gap:splash src="splash/android/ldpi.png" gap:platform="android" gap:density="ldpi" />
+	<gap:splash src="splash/android/mdpi.png" gap:platform="android" gap:density="mdpi" />
+	<gap:splash src="splash/android/hdpi.png" gap:platform="android" gap:density="hdpi" />
+ -->
+
+	<feature name="http://api.phonegap.com/1.0/battery"/>
+	<feature name="http://api.phonegap.com/1.0/camera"/>
+	<feature name="http://api.phonegap.com/1.0/contacts"/>
+	<feature name="http://api.phonegap.com/1.0/file"/>
 	<feature name="http://api.phonegap.com/1.0/geolocation"/>
+	<feature name="http://api.phonegap.com/1.0/media"/>
 	<feature name="http://api.phonegap.com/1.0/network"/>
+	<feature name="http://api.phonegap.com/1.0/notification"/>
 
+
+	<preference name="phonegap-version" value="1.8.1" />
 	<preference name="orientation" value="portrait" />
+	<preference name="target-device" value="universal" />
+	<preference name="fullscreen" value="true" />
+	<preference name="android-installLocation" value="internalOnly" />
+
+	<access origin="http://tbm.penavicotj.com" subdomains="true" />
+
 </widget>
