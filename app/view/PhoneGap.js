@@ -54,6 +54,25 @@
 				);			
 			}} , 
 
+			{text:"CONFIRM" , handler:function(){
+				navigator.notification.confirm(
+					'You are the winner!',  // 显示信息
+					function(btn){
+						alert(btn)
+					},              // 按下按钮后触发的回调函数，返回按下按钮的索引
+					'Game Over',            // 标题
+					'Restart,Exit'          // 按钮标签
+				);	
+			}} , 
+
+			{text:"beep" , handler:function(){
+				navigator.notification.beep(3);
+			}} , 
+
+			{text:"vibrate" , handler:function(){
+				navigator.notification.vibrate(2500);
+			}} , 
+
 			{text:"调用相机" , handler:function(){
 				navigator.camera.getPicture(onSuccess, onFail, { quality: 50,
 					destinationType: Camera.DestinationType.DATA_URL
