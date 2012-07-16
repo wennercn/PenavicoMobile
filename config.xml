@@ -13,7 +13,7 @@
 		Wenner
 	</author>
 
-	<icon src="res/icons/ships.png" gap:role="default" />
+	<icon src="res/icons/startup.png" gap:role="default" />
 <!-- 
 	<icon src="icons/android/ldpi.png" gap:platform="android" gap:density="ldpi" />
 	<icon src="icons/android/mdpi.png" gap:platform="android" gap:density="mdpi" />
