@@ -1,0 +1,7 @@
+.home div.menu {
+	float:left;width:96px;height:100px;margin:0 18px 18px 0;text-align:center;
+}
+.home div.menu img {margin:5px auto}
+.home div.menu p {
+	font:normal 16px 微软雅黑
+}
