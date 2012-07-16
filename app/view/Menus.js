@@ -15,7 +15,8 @@
 				{name: '我的任务' , icon:"tasks.png" , view:"Tasks"},
 				{name: '船舶列表' , icon:"ships.png" , view:"Menus"},
 				{name: 'GPS定位' , icon:"gps.png" , view:"GPS"},
-				{name: '切换用户' , icon:"gps.png" , view:"Login"}
+				{name: '切换用户' , icon:"gps.png" , view:"Login"} , 
+				{name:"PG测试" , icon:"ships.png" , view:"PhoneGap"}
 			]
 		},
 		itemTpl: '<div class="menu"><img src="res/icons/{icon}"><p><span>{name}</span></p></div>'

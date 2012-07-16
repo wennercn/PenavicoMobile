@@ -8,6 +8,12 @@
 		control: {
 			btn_login: {
 				tap: "checkLogin"
+			} , 
+			form: {
+				activate: function(){
+					var st = window.localStorage;
+					var user = st.setItem("isLogin" , "0");	
+				}
 			}
 		}
 	} , 
@@ -20,7 +26,7 @@
 			return;
 		}
 
-        //form.setMasked({ xtype: 'loadmask'  , message:"登录验证..."});	
+        form.setMasked({ xtype: 'loadmask'  , message:"登录验证..."});	
 		/*
 		Ext.Ajax.request({
 			//url:"http://tbm.penavicotj.com/penavico/ws/mobile" , 
@@ -49,7 +55,7 @@
 		}
 
 		var st = window.localStorage;
-		var user = st.setItem("user" , this.getForm().getValues());
+		var user = st.setItem("isLogin" , "1");
 
 		var ss = Ext.Viewport.add({ xtype: 'home' });
 		Ext.Viewport.setActiveItem(ss)

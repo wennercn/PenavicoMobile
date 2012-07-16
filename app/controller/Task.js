@@ -7,6 +7,7 @@
 
 			tasks: "tasks" , 
 			btntaskback: "tasks button[action=back]"	 , 
+			btntaskrefresh: "tasks button[action=refresh]" , 
 			btntaskconfirm: "tasks button[action=confirm]" ,
 			
 			taskconfirm: "taskconfirm" , 
@@ -16,10 +17,11 @@
 		},
 		control: {
 			tasks: {
-				itemtap: function(){
-				} , 
 				selectionchange: function(st , rs){
 					this.getBtntaskconfirm().setDisabled(rs.length == 0);
+				} , 
+				initialize: function(){
+					//this.getTasks().getStore().load();
 				}
 			} , 
 			btntaskback: {
@@ -29,6 +31,12 @@
 					Ext.Viewport.getLayout().setAnimation({type: 'slide', direction: 'left'});
 				}
 			} , 
+			btntaskrefresh: {
+				tap: function(){
+					this.getTasks().getStore().load();
+				}
+			} , 
+
 			btntaskconfirm: {
 				tap: function(){
 					var view = Ext.create("PenavicoMobile.view.TaskConfirm" , {});

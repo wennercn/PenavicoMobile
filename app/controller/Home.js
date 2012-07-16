@@ -90,15 +90,14 @@
 
 	onMenuTap: function(list , idx , el , record){
 		var cls = "PenavicoMobile.view."+record.get("view");
-
-		var view = Ext.create(cls);
-		/*
-		if (!this.ss) {
-			this.ss = Ext.create("PenavicoMobile.view.Tasks" , {
-			});
+		var itemId= cls.split(".").join("_");
+		var view = Ext.getCmp(itemId);
+		if (!view) {
+			view = Ext.create(cls , {
+				id: itemId
+			});			
+			Ext.Viewport.add(view);
 		}
-		*/
-		Ext.Viewport.add(view);
 		Ext.Viewport.setActiveItem(view)
 	}
 
