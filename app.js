@@ -1,8 +1,13 @@
 ﻿Ext.Loader.setPath({
-    'PenavicoMobile': 'app'
+    'PenavicoMobile': 'app' , 
+	'PhoneGap' : 'app'
 });
+
 Ext.application({
-    //requires: ['Oreilly.util.Proxy'],
+    requires: [
+		'PenavicoMobile.globolConfig' , 
+		'PenavicoMobile.util.PhoneGap'
+	],
     name: 'PenavicoMobile',
     glossOnIcon: false,
 	//不同尺寸的图标
@@ -56,6 +61,10 @@ Ext.application({
 
 	//启动
     launch: function() {
+
+		this.globolConfig = PenavicoMobile.globolConfig;
+	
+
 		var st = window.localStorage;
 		var isLogin = st.getItem("isLogin");
 		if (isLogin != "1"){
