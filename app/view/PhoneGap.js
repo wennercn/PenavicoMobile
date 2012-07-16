@@ -43,6 +43,16 @@
 				}, false); //搜索键				
 			}} , 
 
+			{text:"NOTIFICATION" , handler:function(){
+				navigator.notification.alert(
+					'You are the winner!',  // 显示信息
+					function(){
+						alert(111)
+					},         // 警告被忽视的回调函数
+					'Game Over',            // 标题
+					'Done'                  // 按钮名称
+				);			
+			}} , 
 
 			{text:"调用相机" , handler:function(){
 				navigator.camera.getPicture(onSuccess, onFail, { quality: 50,
