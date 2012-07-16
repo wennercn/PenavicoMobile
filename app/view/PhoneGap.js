@@ -12,7 +12,7 @@
 		items:[
 			{text:"跨域调用XML" , handler:function(){
 				Ext.Ajax.request({
-					url:"http://tbm.penavicotj.com/penavico/ws/admin.asmx/checkSession" , 
+					url:"http://tbm.penavicotj.com/penavico/ws/admin.asmx/CheckSession" , 
 					success: function(response, opts) {
 						alert("succ:"+response.responseText)
 					},
