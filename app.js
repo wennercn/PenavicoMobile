@@ -1,4 +1,4 @@
-Ext.Loader.setPath({
+﻿Ext.Loader.setPath({
     'PenavicoMobile': 'app'
 });
 Ext.application({
@@ -18,28 +18,53 @@ Ext.application({
     tabletStartupScreen: 'resources/images/splash.jpg',
 	
 	//models
-	models:[		
+	models:[	
+		"Task"
 	] , 
 	//stores
     stores: [
+		"Tasks"
 	] , 
 	//views
     views: [
-		"Main"
+		"Home" , 
+		"Menus" , 
+		"Tasks" , 
+		"Login"
     ],
 
 	//controllers
 	controllers: [
+		"Home" , 
+		"Login" , 
+		"Task"
 	] ,
 
     viewport: {
-        autoMaximize: true
+        autoMaximize: true , 
+		layout:{
+			type:"card" , 
+			animation: {
+                type: 'slide',
+                direction: 'left',
+                duration: 250
+            }
+		} 
     },
 
 
 
 	//启动
     launch: function() {
+		var st = window.localStorage;
+		var user = st.getItem("user");
+		if (!user){
+            Ext.Viewport.add({ xtype: 'login' });
+		}else{
+            Ext.Viewport.add({ xtype: 'home' });
+		}
+
+		/*
         Ext.Viewport.setMasked({ 
 			xtype: 'loadmask'  , 
 			message:"登录系统"
@@ -49,6 +74,40 @@ Ext.application({
             Ext.Viewport.add({ xtype: 'main' });
             Ext.Viewport.setMasked(false);
 		} , 1000)();
+		*/
+
+
+
+		/*
+		st.setItem("user" , {
+			id:"111" , 
+			name:"wenner"
+		})
+		alert(st.getItem("user"));
+		*/
+		/*
+		Ext.Ajax.request({
+			url:"http://tbm.penavicotj.com/penavico/ws/admin.asmx/checkSession" , 
+			callback: function(a){
+				console.log(a)
+			}
+		})
+		*/
+		/*
+		navigator.camera.getPicture(onSuccess, onFail, { quality: 50,
+			destinationType: Camera.DestinationType.DATA_URL
+		 }); 
+
+		function onSuccess(imageData) {
+			var image = document.getElementById('myImage');
+			image.src = "data:image/jpeg;base64," + imageData;
+		}
+
+		function onFail(message) {
+			alert('Failed because: ' + message);
+		}
+		*/
+
 	}
 
 });

@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <widget xmlns		= "http://www.w3.org/ns/widgets"
 	xmlns:gap	= "http://phonegap.com/ns/1.0"
 	id		= "com.penavicotj.mobile"
 	version 	= "1.0.0">
 
-	<name>天津外代船务平台</name>
+	<name>PenavicoTJ</name>
 	<description>
 		天津外代船代业务滚动互动管理平台移动版
 	</description>
@@ -13,14 +13,14 @@
 		Wenner
 	</author>
 
-	<icon src="images/icon.png" gap:role="default" />
+	<icon src="res/icons/ships.png" gap:role="default" />
 <!-- 
 	<icon src="icons/android/ldpi.png" gap:platform="android" gap:density="ldpi" />
 	<icon src="icons/android/mdpi.png" gap:platform="android" gap:density="mdpi" />
 	<icon src="icons/android/hdpi.png" gap:platform="android" gap:density="hdpi" />
  -->
 
-	<gap:splash src="images/splash.png" />
+	<gap:splash src="res/images/splash.jpg" />
 <!-- 
 	<gap:splash src="splash/android/ldpi.png" gap:platform="android" gap:density="ldpi" />
 	<gap:splash src="splash/android/mdpi.png" gap:platform="android" gap:density="mdpi" />

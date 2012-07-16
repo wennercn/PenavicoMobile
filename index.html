@@ -3,9 +3,15 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>天津外代业务滚动互动平台</title>
-    <link rel="stylesheet" href="resources/css/sencha-touch.css" type="text/css">
-    <link rel="stylesheet" href="resources/css/style.css" type="text/css">
+    <link rel="stylesheet" href="res/css/sencha-touch.css" type="text/css">
+    <link rel="stylesheet" href="res/css/style.css" type="text/css">
+    <script type="text/javascript" src="sdk/cordova-1.9.0.js"></script>
     <script type="text/javascript" src="sdk/sencha-touch-all.js"></script>
+	<script type="text/javascript"> 
+		//android 4.0 白屏
+		Ext.Loader.setConfig({ disableCaching: false }); 
+		Ext.Ajax.setDisableCaching(false); 
+	</script>
     <script type="text/javascript" src="app.js"></script>
 </head>
 <body></body>
