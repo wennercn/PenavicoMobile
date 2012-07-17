@@ -1,11 +1,11 @@
-Ext.define('PenavicoMobile.store.Tasks', {
+﻿Ext.define('PenavicoMobile.store.Tasks', {
 	extend: 'Ext.data.Store',
 	//requires: 'Ext.DateExtras',
     config: {
         model: 'PenavicoMobile.model.Task',
 		proxy: {
 			type: 'ajax',
-			url:"ws/tasks.xml" , 
+			url:PenavicoMobile.globolConfig.wspath+"person.asmx/GetTasks" , 
 			reader: {
 				type: 'xml',
 				record: 'RowSet R'

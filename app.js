@@ -6,7 +6,8 @@
 Ext.application({
     requires: [
 		'PenavicoMobile.globolConfig' , 
-		'PenavicoMobile.util.PhoneGap'
+		'PenavicoMobile.util.PhoneGap' , 
+		'PenavicoMobile.util.ParseResponse'
 	],
     name: 'PenavicoMobile',
     glossOnIcon: false,
@@ -62,8 +63,8 @@ Ext.application({
 	//启动
     launch: function() {
 
-		this.globolConfig = PenavicoMobile.globolConfig;
-	
+		this.GC = this.globolConfig = PenavicoMobile.globolConfig;
+
 
 		var st = window.localStorage;
 		var isLogin = st.getItem("isLogin");

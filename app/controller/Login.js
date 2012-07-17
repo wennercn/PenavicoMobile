@@ -19,6 +19,10 @@
 	} , 
 
 	checkLogin: function(){
+
+		var GC = this.getApplication().GC;
+		var wspath = GC.wspath;
+
 		var form = this.getForm();
 		var vs = form.getValues();
 		if (!vs.u_name || !vs.u_pass){
@@ -27,29 +31,22 @@
 		}
 
         form.setMasked({ xtype: 'loadmask'  , message:"登录验证..."});	
-		/*
+		
 		Ext.Ajax.request({
-			//url:"http://tbm.penavicotj.com/penavico/ws/mobile" , 
-			url:"http://192.168.0.159/penavico2/ws/admin.asmx/CheckLogin" , 
-			callback: this._checkLogin , 
+			url: wspath+'admin.asmx/CheckLogin',
+			params: vs , 
+			success: this._checkLogin , 
 			scope: this		
 		})
-		*/
-
-        Ext.data.JsonP.request({
-            url: 'http://192.168.0.159/penavico2/ws/mobile/admin.asmx/CheckLogin',
-            callbackKey: 'callback',
-            params: vs , 
-            success: this._checkLogin , 
-			scope: this
-        });
 
 	} , 
 
 	_checkLogin: function(result){
 
-		if (!result.succ) {
-			Ext.Msg.alert('错误', result.message);
+		var bd = $back(result);
+
+		if (!bd.isok) {
+			Ext.Msg.alert('错误', bd.getErrorInfo());
 			this.getForm().setMasked(false);
 			return;		
 		}
