@@ -6,7 +6,7 @@
 			home: 'home',
 
 			tasks: "tasks" , 
-			btntaskback: "tasks button[action=back]"	 , 
+			//btntaskback: "tasks button[action=back]"	 , 
 			btntaskrefresh: "tasks button[action=refresh]" , 
 			btntaskconfirm: "tasks button[action=confirm]" ,
 			
@@ -24,13 +24,7 @@
 					//this.getTasks().getStore().load();
 				}
 			} , 
-			btntaskback: {
-				tap: function(){
-					Ext.Viewport.getLayout().setAnimation({type: 'slide', direction: 'right'});
-					Ext.Viewport.setActiveItem(this.getHome());
-					Ext.Viewport.getLayout().setAnimation({type: 'slide', direction: 'left'});
-				}
-			} , 
+
 			btntaskrefresh: {
 				tap: function(){
 					this.getTasks().getStore().load();

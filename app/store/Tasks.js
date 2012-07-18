@@ -5,10 +5,10 @@
         model: 'PenavicoMobile.model.Task',
 		proxy: {
 			type: 'ajax',
-			url:PenavicoMobile.globolConfig.wspath+"person.asmx/GetTasks" , 
+			url:PenavicoMobile.globolConfig.wspath+"task.asmx/GetTasks" , 
 			reader: {
 				type: 'xml',
-				record: 'RowSet R'
+				record: 'dutylist R'
 			} ,
 		},
 		//autoLoad: true ,

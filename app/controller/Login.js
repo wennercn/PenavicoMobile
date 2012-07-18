@@ -2,6 +2,7 @@
 	extend: 'Ext.app.Controller',
 	config: {
 		refs: {
+			home: "home" , 
 			form: "login" ,
 			btn_login : "button[itemId=login]"
 		},
@@ -11,8 +12,8 @@
 			} , 
 			form: {
 				activate: function(){
-					var st = window.localStorage;
-					var user = st.setItem("isLogin" , "0");	
+					//var st = window.localStorage;
+					//var user = st.setItem("user" , null);	
 				}
 			}
 		}
@@ -36,6 +37,10 @@
 			url: wspath+'admin.asmx/CheckLogin',
 			params: vs , 
 			success: this._checkLogin , 
+			failure: function(data){
+				Ext.Msg.alert("xxx" , data.responseText);
+				this.getForm().setMasked(false);
+			} , 
 			scope: this		
 		})
 
@@ -44,19 +49,37 @@
 	_checkLogin: function(result){
 
 		var bd = $back(result);
-
+		console.log(bd)
 		if (!bd.isok) {
 			Ext.Msg.alert('错误', bd.getErrorInfo());
 			this.getForm().setMasked(false);
 			return;		
 		}
+		
+		//设置用户信息
+		var user = this.setInfo(bd.data);
 
 		var st = window.localStorage;
-		var user = st.setItem("isLogin" , "1");
-
-		var ss = Ext.Viewport.add({ xtype: 'home' });
-		Ext.Viewport.setActiveItem(ss)
+		st.setItem("user" , Ext.encode(user));
+		
+		var home = this.getHome();
+		if (!home) {
+			home = Ext.Viewport.add({xtype:"home"});
+		}
+		Ext.Viewport.setActiveItem(home)
 
 		this.getForm().setMasked(false);
+	} ,
+
+	setInfo: function(node){
+		var user = {};
+		user.Name = node.getAttribute("name");
+		user.Code = node.getAttribute("code");
+		user.Id = node.getAttribute("id");
+		user.Loc = node.getAttribute("loc");
+
+		var app = this.getApplication();
+		app.userInfo = user;
+		return user
 	}
 });

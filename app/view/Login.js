@@ -6,7 +6,9 @@ Ext.define("PenavicoMobile.view.Login" ,{
 		iconCls: 'user',
 		layout: 'vbox',
 		items: [
-			{xtype:"titlebar" , docked:"top" , title:"用户登录"} , 
+			{xtype:"titlebar" , docked:"top" , title:"用户登录" , items:[
+				{ui:'back', text: '返回' , align:"left" , action:"back2home"}
+			]} , 
 			{
 				xtype: 'fieldset',
 				instructions: '请输入用户名密码!',
