@@ -1,7 +1,5 @@
 ﻿Ext.define("PenavicoMobile.util.ParseResponse" , {
 	singleton: true , 
-	isok: false ,
-	_data: null , 
 	getErrorInfo: function(){
 		return this.errinfo;
 	} , 
@@ -12,6 +10,8 @@
 	 *
 	 */
 	parse: function(obj , type){
+		this.isok = false;
+
 		this._data = obj;
 
 		if (obj.responseText && Ext.isEmpty(obj.responseText)){
@@ -61,12 +61,12 @@
 				return this
 			}
 			this.isok = true;
-			/*
+			
 			this.serverdate = Ext.Date.parse(root.getAttribute("serverdate") , "Y-m-d H:i:s");
-			if (Penavico.App != undefined) {
-				Penavico.App.ServerDate = this.serverdate;
+			if (PenavicoMobile.globolConfig != undefined) {
+				PenavicoMobile.globolConfig.ServerDate = this.serverdate;
 			}
-			*/
+			
 			this.msg = root.getAttribute("message")
 			this.data =Ext.DomQuery.selectNode("data" , bd);
 		}
@@ -77,4 +77,6 @@
 
 })
 
-window.$back = PenavicoMobile.util.ParseResponse.parse;
+window.$back = function(obj , type){
+	return PenavicoMobile.util.ParseResponse.parse(obj , type)
+};

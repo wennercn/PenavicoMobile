@@ -4,9 +4,14 @@
 	config: {
 		refs: {
 			home: 'home' , 
-			menu: "home menus"
+			menu: "home menus" , 
+			tbar: "home titlebar"
 		},
 		control: {
+			home: {
+				initialize: "setTitle" , 
+				activate: "setTitle"
+			} , 
 			menu: {
 				itemtap: "onMenuTap"
 			} , 
@@ -99,6 +104,9 @@
 			Ext.Viewport.add(view);
 		}
 		Ext.Viewport.setActiveItem(view)
-	}
+	} , 
 
+	setTitle: function(){
+		this.getTbar().setTitle("你好 , "+this.getApplication().userInfo.Name+" !");	
+	}
 });

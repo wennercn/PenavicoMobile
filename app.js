@@ -7,8 +7,14 @@ Ext.application({
     requires: [
 		'PenavicoMobile.globolConfig' , 
 		'PenavicoMobile.util.PhoneGap' , 
-		'PenavicoMobile.util.ParseResponse'
-	],
+		'PenavicoMobile.util.ParseResponse' , 
+		'PenavicoMobile.util.Functions'
+    ],
+
+	//自定义内容开始
+
+	//自定义内容结束
+
     name: 'PenavicoMobile',
     glossOnIcon: false,
 	//不同尺寸的图标
@@ -25,25 +31,33 @@ Ext.application({
 	
 	//models
 	models:[	
-		"Task"
+		"Task" , 
+		"Plan"
 	] , 
 	//stores
     stores: [
-		"Tasks"
+		"Tasks" , 
+		"Plans"
 	] , 
 	//views
     views: [
+		"Login" , 
 		"Home" , 
 		"Menus" , 
 		"Tasks" , 
-		"Login"
+		"plan.List" , 
+		"plan.Progress" , 
+		"plan.Event"
     ],
 
 	//controllers
 	controllers: [
+		"Common" , 
 		"Home" , 
 		"Login" , 
-		"Task"
+		"Task" , 
+		"plan.List" , 
+		"plan.WorkInfo"
 	] ,
 
     viewport: {
@@ -59,32 +73,25 @@ Ext.application({
     },
 
 
-
 	//启动
-    launch: function() {
+	launch: function() {
+		this.userInfo = {};
 
+		//公共配置
 		this.GC = this.globolConfig = PenavicoMobile.globolConfig;
-
-
+		
+		//是否已登录
+		//TODO: 需要修改
 		var st = window.localStorage;
-		var isLogin = st.getItem("isLogin");
-		if (isLogin != "1"){
+		var user = st.getItem("user");
+		var isLogin = !Ext.isEmpty(user);
+		if (!isLogin){
             Ext.Viewport.add({ xtype: 'login' });
 		}else{
+			//获取已登录用户信息
+			this.userInfo = Ext.decode(user);
             Ext.Viewport.add({ xtype: 'home' });
 		}
-
-		/*
-        Ext.Viewport.setMasked({ 
-			xtype: 'loadmask'  , 
-			message:"登录系统"
-		});
-
-		Ext.Function.createDelayed(function(){
-            Ext.Viewport.add({ xtype: 'main' });
-            Ext.Viewport.setMasked(false);
-		} , 1000)();
-		*/
 	}
 
 });
