@@ -1,13 +1,12 @@
 ﻿//作业进度信息
-Ext.define("PenavicoMobile.view.workinfo.Progress" ,{
+Ext.define("PenavicoMobile.view.plan.Progress" ,{
 	extend:"Ext.form.Panel" , 
-	xtype:"workinfoProgress" , 
+	xtype:"planProgress" , 
 	config: {
-		iconCls: 'user',
 		layout: 'vbox',
 		items: [
-			{xtype:"titlebar" , docked:"top" , title:"马士基九龙 作业进度" , items:[
-				{ui:'back', text: '返回' , align:"left" , action:"back2workinfolist"}
+			{xtype:"titlebar" , docked:"top" , title:"作业进度" , items:[
+				{ui:'back', text: '返回' , align:"left" , action:"back2planlist"}
 			]} , 
 			{
 				xtype: 'fieldset',
@@ -22,5 +21,6 @@ Ext.define("PenavicoMobile.view.workinfo.Progress" ,{
 	} , 
 	setPlan: function(plan){
 		this.plan = plan;
+		this.down("titlebar").setTitle(plan.get("shipname")+" 作业进度");
 	}
 });

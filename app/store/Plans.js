@@ -12,7 +12,7 @@
 				} ,
 			},
 			//autoLoad: true ,
-			groupField: "groupname" ,
+			//groupField: "groupname" ,
 			sorters: [
 				{property: 'etb',direction: 'ASC'}
 			]

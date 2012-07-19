@@ -1,8 +1,8 @@
 ﻿Ext.define('PenavicoMobile.view.PhoneGap', {
 	extend: 'Ext.Container',
 	xtype: 'test',
-	config: {	
-		title:"fsadfasd" , 
+	scrollable:true , 
+	config: {			
 		layout:"vbox" , 
 		padding:5 , 
 		defaults:{
@@ -10,6 +10,9 @@
 			margin:"0 0 5 0"
 		} , 
 		items:[
+			{xtype:"titlebar" , docked:"top" , title:"PhoneGap 测试" , items:[
+				{ui:"back" , text:"返回" , action:"back2home"}
+			]} , 
 			{text:"跨域调用XML" , handler:function(){
 				Ext.Ajax.request({
 					url:"http://tbm.penavicotj.com/penavico/ws/admin.asmx/CheckSession" , 

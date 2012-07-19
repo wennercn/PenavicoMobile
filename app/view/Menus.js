@@ -13,9 +13,9 @@
 			fields: ['name', 'icon' , 'view'],
 			data: [
 				{name: '我的任务' , icon:"tasks.png" , view:"Tasks"},
-				{name: '船舶列表' , icon:"ships.png" , view:"Plans"},
-				{name: '作业进度测试' , icon:"gps.png" , view:"workinfo.Progress"},
-				{name: '突发事件测试' , icon:"gps.png" , view:"workinfo.Event"},
+				{name: '船舶列表' , icon:"ships.png" , view:"plan.List"},
+				//{name: '作业进度测试' , icon:"gps.png" , view:"plan.Progress"},
+				//{name: '突发事件测试' , icon:"gps.png" , view:"plan.Event"},
 				{name: '切换用户' , icon:"gps.png" , view:"Login"} , 
 				{name:"PG测试" , icon:"ships.png" , view:"PhoneGap"}
 			]

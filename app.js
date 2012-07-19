@@ -46,9 +46,9 @@ Ext.application({
 		"Home" , 
 		"Menus" , 
 		"Tasks" , 
-		"Plans" , 
-		"workinfo.Progress" , 
-		"workinfo.Event"
+		"plan.List" , 
+		"plan.Progress" , 
+		"plan.Event"
     ],
 
 	//controllers
@@ -57,8 +57,8 @@ Ext.application({
 		"Home" , 
 		"Login" , 
 		"Task" , 
-		"Plan" , 
-		"WorkInfo"
+		"plan.List" , 
+		"plan.WorkInfo"
 	] ,
 
     viewport: {

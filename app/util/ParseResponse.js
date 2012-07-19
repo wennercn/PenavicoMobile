@@ -1,7 +1,5 @@
 ﻿Ext.define("PenavicoMobile.util.ParseResponse" , {
 	singleton: true , 
-	isok: false ,
-	_data: null , 
 	getErrorInfo: function(){
 		return this.errinfo;
 	} , 
@@ -12,6 +10,8 @@
 	 *
 	 */
 	parse: function(obj , type){
+		this.isok = false;
+
 		this._data = obj;
 
 		if (obj.responseText && Ext.isEmpty(obj.responseText)){

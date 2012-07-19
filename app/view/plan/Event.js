@@ -1,12 +1,12 @@
-﻿//作业进度信息
-Ext.define("PenavicoMobile.view.workinfo.Event" ,{
+﻿//突发事件
+Ext.define("PenavicoMobile.view.plan.Event" ,{
 	extend:"Ext.form.Panel" , 
-	xtype:"workinfoEvent" ,
+	xtype:"planEvent" ,
 	config: {
 		layout: 'vbox',
 		items: [
-				{xtype:"titlebar" , docked:"top" , title:"马士基九龙 突发事件" , items:[
-					{ui:'back', text: '返回' , align:"left" , action:"back2workinfolist"}
+				{xtype:"titlebar" , docked:"top" , title:"突发事件" , items:[
+					{ui:'back', text: '返回' , align:"left" , action:"back2planlist"}
 				]} , 
 
 				{xtype: 'fieldset', title:"事件信息" , items: [
@@ -19,12 +19,8 @@ Ext.define("PenavicoMobile.view.workinfo.Event" ,{
 				{xtype: 'button', text: '保存信息' , action:"save" , ui: 'confirm'}
 		] ,
 	} , 
-	initialize: function(){
-		var me = this;
-		alert(111111)
-		this.callParent();
-	} , 
 	setPlan: function(plan){
 		this.plan = plan;
+		this.down("titlebar").setTitle(plan.get("shipname")+" 突发事件");
 	}
 });
