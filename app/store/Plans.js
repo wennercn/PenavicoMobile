@@ -5,7 +5,7 @@
 			model: 'PenavicoMobile.model.Plan',
 			proxy: {
 				type: 'ajax',
-				url:PenavicoMobile.globolConfig.wspath+"plans.xml" , //plan.asmx/GetMyPlans" , 
+				url:PenavicoMobile.globolConfig.wspath+"plan.asmx/GetMyPlans" , 
 				reader: {
 					type: 'xml',
 					record: 'RowSet R'

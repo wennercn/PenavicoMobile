@@ -12,7 +12,7 @@
 				//{ui:'confirm', text: '事项确认' , align:"right" , disabled:true , action:"confirm"} , 
 				{ui:'gray' , iconMask:true , iconCls:"refresh", align:"right" , action:"refresh"}
 			]} , 
-			{xtype: 'titlebar', docked: 'bottom', items: [
+			{xtype: 'toolbar', docked: 'bottom',  layout:{type:"hbox" , pack:"center"} ,  items: [
 				//{ui:'back', text: '返回' , align:"left" , action:"back"},
 				{ui:'confirm', text: '事项确认' , align:"right" , disabled:true , action:"confirm"} ,
 				//{ui:'gray' , iconMask:true , iconCls:"refresh", align:"right"}

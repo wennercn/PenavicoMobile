@@ -130,6 +130,7 @@
 		this.getProgress().setMasked(false);
 		if (!bd.isok) {
 			Ext.Msg.alert("错误" , bd.getErrorInfo());
+			return;
 		}	
 		Ext.Msg.alert("成功" , "信息保存成功" , this.backToList , this);
 	} , 
@@ -220,6 +221,7 @@
 		this.getEvent().setMasked(false);
 		if (!bd.isok) {
 			Ext.Msg.alert("错误" , bd.getErrorInfo());
+			return;
 		}	
 		Ext.Msg.alert("成功" , "信息保存成功" , this.backToList , this);
 	} , 
