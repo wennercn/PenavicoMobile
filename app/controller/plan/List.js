@@ -19,6 +19,11 @@
 			} , 
 			"plans toolbar button" : {
 				tap: "onPlanButtonTap"
+			} , 
+			"plans button[action=refresh]" : {
+				tap: function(){
+					this.getList().getStore().load();
+				}	
 			}
 		}
 	} , 
