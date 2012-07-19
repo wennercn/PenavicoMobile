@@ -86,6 +86,7 @@ Ext.application({
 		var st = window.localStorage;
 		var user = st.getItem("user");
 		var isLogin = !Ext.isEmpty(user);
+		isLogin = true;
 		if (!isLogin){
             Ext.Viewport.add({ xtype: 'login' });
 		}else{
