@@ -1,17 +1,17 @@
 ﻿Ext.Loader.setPath({
     'PenavicoMobile': 'app' , 
-		'PhoneGap' : 'app'
+	'PhoneGap' : 'app'
 });
 
 Ext.application({
-		
+    /*
     requires: [
 		'PenavicoMobile.globolConfig' , 
 		'PenavicoMobile.util.PhoneGap' , 
 		'PenavicoMobile.util.ParseResponse' , 
 		'PenavicoMobile.util.Functions'
-	],
-	
+    ],
+    */
 	//自定义内容开始
 	userInfo: {} , 
 
@@ -86,7 +86,6 @@ Ext.application({
 		var st = window.localStorage;
 		var user = st.getItem("user");
 		var isLogin = !Ext.isEmpty(user);
-		isLogin = true;
 		if (!isLogin){
             Ext.Viewport.add({ xtype: 'login' });
 		}else{
