@@ -42,6 +42,7 @@
 	} , 
 
 	_checkLogin: function(result){
+		alert(result)
 
 		var bd = $back(result);
 
