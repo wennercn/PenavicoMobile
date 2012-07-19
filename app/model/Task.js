@@ -25,6 +25,7 @@ Ext.define('PenavicoMobile.model.Task', {
 				var n = [];
 				if (r.get("ename") != "") n.push(r.get("ename"));
 				if (r.get("cname") != "") n.push(r.get("cname"));
+				alert(n)
 				return n.join(" / ");
 			}} ,
 			{name:'shipnameandvoyage' , mapping:'@shipname' , convert:function(v , r){
@@ -84,8 +85,6 @@ Ext.define('PenavicoMobile.model.Task', {
 			{name:"memo" , mapping:"@memo"} ,					//备注
 			{name:"px" , mapping:"@px" , type:"int"} ,								//分计划排序
 			{name:'groupname' , convert:function(v , r){
-				alert(r.get("shipname"))
-				alert(r.get("voyage"))
 				return r.get("shipname") +" "+ r.get("voyage");
 			}}
 		]
