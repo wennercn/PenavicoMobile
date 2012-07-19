@@ -1,6 +1,6 @@
 ﻿Ext.Loader.setPath({
     'PenavicoMobile': 'app' , 
-	'PhoneGap' : 'app'
+		'PhoneGap' : 'app'
 });
 
 Ext.application({
@@ -34,33 +34,33 @@ Ext.application({
 	
 	//models
 	models:[	
-		"Task" , 
-		"Plan"
+		//"Task" , 
+		//"Plan"
 	] , 
 	//stores
-    stores: [
-		"Tasks" , 
-		"Plans"
+	stores: [
+		//"Tasks" , 
+		//"Plans"
 	] , 
 	//views
-    views: [
-		"Login" , 
+	views: [
+		//"Login" , 
 		"Home" , 
 		"Menus" , 
-		"Tasks" , 
-		"plan.List" , 
-		"plan.Progress" , 
-		"plan.Event"
+		//"Tasks" , 
+		//"plan.List" , 
+		//"plan.Progress" , 
+		//"plan.Event"
     ],
 
 	//controllers
 	controllers: [
 		"Common" , 
 		"Home" , 
-		"Login" , 
-		"Task" , 
-		"plan.List" , 
-		"plan.WorkInfo"
+		//"Login" , 
+		//"Task" , 
+		//"plan.List" , 
+		//"plan.WorkInfo"
 	] ,
 
     viewport: {
