@@ -47,9 +47,7 @@
 	} , 
 
 	_checkLogin: function(result){
-
 		var bd = $back(result);
-		console.log(bd)
 		if (!bd.isok) {
 			Ext.Msg.alert('错误', bd.getErrorInfo());
 			this.getForm().setMasked(false);
