@@ -1,20 +1,17 @@
 ﻿Ext.Loader.setPath({
     'PenavicoMobile': 'app' , 
-		'PhoneGap' : 'app'
+	'PhoneGap' : 'app'
 });
 
 Ext.application({
-    /*
     requires: [
 		'PenavicoMobile.globolConfig' , 
 		'PenavicoMobile.util.PhoneGap' , 
 		'PenavicoMobile.util.ParseResponse' , 
 		'PenavicoMobile.util.Functions'
     ],
-		*/
-    
+
 	//自定义内容开始
-	userInfo: {} , 
 
 	//自定义内容结束
 
@@ -34,33 +31,33 @@ Ext.application({
 	
 	//models
 	models:[	
-		//"Task" , 
-		//"Plan"
+		"Task" , 
+		"Plan"
 	] , 
 	//stores
-	stores: [
-		//"Tasks" , 
-		//"Plans"
+    stores: [
+		"Tasks" , 
+		"Plans"
 	] , 
 	//views
-	views: [
-		//"Login" , 
+    views: [
+		"Login" , 
 		"Home" , 
 		"Menus" , 
-		//"Tasks" , 
-		//"plan.List" , 
-		//"plan.Progress" , 
-		//"plan.Event"
+		"Tasks" , 
+		"plan.List" , 
+		"plan.Progress" , 
+		"plan.Event"
     ],
 
 	//controllers
 	controllers: [
 		"Common" , 
 		"Home" , 
-		//"Login" , 
-		//"Task" , 
-		//"plan.List" , 
-		//"plan.WorkInfo"
+		"Login" , 
+		"Task" , 
+		"plan.List" , 
+		"plan.WorkInfo"
 	] ,
 
     viewport: {
@@ -77,8 +74,9 @@ Ext.application({
 
 
 	//启动
-    launch: function() {
-		
+	launch: function() {
+		this.userInfo = {};
+
 		//公共配置
 		this.GC = this.globolConfig = PenavicoMobile.globolConfig;
 		
@@ -87,7 +85,6 @@ Ext.application({
 		var st = window.localStorage;
 		var user = st.getItem("user");
 		var isLogin = !Ext.isEmpty(user);
-		isLogin = true;
 		if (!isLogin){
             Ext.Viewport.add({ xtype: 'login' });
 		}else{
