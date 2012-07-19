@@ -84,6 +84,8 @@ Ext.define('PenavicoMobile.model.Task', {
 			{name:"memo" , mapping:"@memo"} ,					//备注
 			{name:"px" , mapping:"@px" , type:"int"} ,								//分计划排序
 			{name:'groupname' , convert:function(v , r){
+				alert(r.get("shipname"))
+				alert(r.get("voyage"))
 				return r.get("shipname") +" "+ r.get("voyage");
 			}}
 		]
