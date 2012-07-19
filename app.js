@@ -4,13 +4,14 @@
 });
 
 Ext.application({
+    /*
     requires: [
 		'PenavicoMobile.globolConfig' , 
 		'PenavicoMobile.util.PhoneGap' , 
 		'PenavicoMobile.util.ParseResponse' , 
 		'PenavicoMobile.util.Functions'
-	],
-
+    ],
+    */
 	//自定义内容开始
 	userInfo: {} , 
 
