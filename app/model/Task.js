@@ -25,7 +25,6 @@ Ext.define('PenavicoMobile.model.Task', {
 				var n = [];
 				if (r.get("ename") != "") n.push(r.get("ename"));
 				if (r.get("cname") != "") n.push(r.get("cname"));
-				alert(n)
 				return n.join(" / ");
 			}} ,
 			{name:'shipnameandvoyage' , mapping:'@shipname' , convert:function(v , r){
