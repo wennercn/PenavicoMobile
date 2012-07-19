@@ -12,7 +12,14 @@
 				} ,
 			},
 			//autoLoad: true ,
-			groupField: "groupname" ,
+			//groupField: "groupname" ,
+			//MOdel中不能用两层convert,所以在STORE中grouper获取船名+航次来分组
+		        grouper: {
+		            groupFn: function(record) {
+		                return record.get('shipname')+" "+record.get("voyage");
+		            },
+		            sortProperty: 'shipname'
+		        } , 			
 			sorters: [
 				{property: 'finish_time',direction: 'ASC'}
 			]
