@@ -260,14 +260,41 @@
 		); 
 		
 		
-		function onSuccess(url) {
-			alert(url)
+		function onSuccess(uri) {
+			var options = new FileUploadOptions();
+			options.fileKey="file";
+			options.fileName=fileURI.substr(fileURI.lastIndexOf('/')+1);
+			options.mimeType="text/plain";
+			
 
+			var params = new Object();
+			params.value1 = "test";
+			params.value2 = "param";
+
+			options.params = params;
+
+			var ft = new FileTransfer();
+			ft.upload(fileURI, encodeURI("http://192.168.0.110/freesailingadmin/test.ashx"), win, fail, options);
 		}
 
 		function onFail(message) {
 			alert('Failed because: ' + message);
 		}
+
+
+		var win = function(r) {
+			console.log("Code = " + r.responseCode);
+			console.log("Response = " + r.response);
+			console.log("Sent = " + r.bytesSent);
+		}
+
+		var fail = function(error) {
+			alert("An error has occurred: Code = " + error.code);
+			console.log("upload error source " + error.source);
+			console.log("upload error target " + error.target);
+		}
+
+
 	}
 
 });

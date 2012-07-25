@@ -8,7 +8,7 @@ Ext.define("PenavicoMobile.view.plan.Event" ,{
 				{xtype:"titlebar" , docked:"top" , title:"突发事件" , items:[
 					{ui:'back', text: '返回' , align:"left" , action:"back2planlist"}
 				]} , 
-				{xtype: 'fieldset', title:"事件信息" , defaults:{ style:"font-size:16px" , height:80} , 
+				{xtype: 'fieldset', title:"事件信息" , defaults:{ style:"font-size:16px" , height:100} , 
 					items: [
 					{xtype: 'textareafield',label: '情况描述',name: '情况描述'},
 					{xtype: 'textareafield',label: '处理结果',name: '处理结果' },
