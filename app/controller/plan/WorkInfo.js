@@ -8,7 +8,8 @@
 			btnSaveProgress: "planProgress button[action=save]" , 
 
 			event: "planEvent" , 
-			btnSaveEvent: "planEvent button[action=save]"
+			btnSaveEvent: "planEvent button[action=save]" , 
+			eventMedia: "planEvent list"
 
 		},
 		control: {
@@ -26,7 +27,11 @@
 			} , 
 			"button[action=back2planlist]": {
 				tap: "backToList"
+			} , 
+			"toolbar[itemId=mediabar] button" :{
+				tap: "getMedia"
 			}
+
 		}
 	} , 
 	
@@ -225,5 +230,163 @@
 		}	
 		Ext.Msg.alert("成功" , "信息保存成功" , this.backToList , this);
 	} , 
+
+
+	getMedia: function(btn){
+		var action = btn.config.action;
+		this["get"+action]();	
+	} , 
+
+
+	//录音
+	getaudio: function(){
+		var me = this;
+		// capture callback
+		var captureSuccess = function(mediaFiles) {
+			var i, path, len;
+			for (i = 0, len = mediaFiles.length; i < len; i += 1) {
+				path = mediaFiles[i].fullPath;
+				alert(mediaFiles[i].fullPath);
+				try{
+					me.uploadFile(mediaFiles[i]); 
+				}catch(e){
+					alert(e.message);
+				}
+				// do something interesting with the file
+			}
+		};
+
+		// capture error callback
+		var captureError = function(error) {
+			navigator.notification.alert('Error code: ' + error.code, null, 'Capture Error');
+		};
+
+		// start audio capture
+		navigator.device.capture.captureAudio(captureSuccess, captureError);
+	} , 
+	//
+	getvideo: function(){
+		var me = this;
+
+		// 采集操作成功完成后的回调函数
+		function captureSuccess(mediaFiles) { 
+			var i, len; 
+			for (i = 0, len = mediaFiles.length; i < len; i += 1) { 
+				alert(mediaFiles[i].fullPath);
+				try{
+					me.uploadFile(mediaFiles[i]); 
+				}catch(e){
+					alert(e.message);
+				}
+			}        
+		} 
+
+		// 采集操作出错后的回调函数 
+		function captureError(error) { 
+			var msg = 'An error occurred during capture: ' + error.code; 
+			navigator.notification.alert(msg, null, 'Uh oh!'); 
+		} 
+		navigator.device.capture.captureVideo(captureSuccess, captureError); 
+
+	} , 
+	//
+	getpicture: function(){
+		var store = this.getEventMedia().getStore();
+		var _uri = "";
+
+		navigator.camera.getPicture(
+			onSuccess, 
+			onFail, 
+			{
+				quality: 50,
+				destinationType: Camera.DestinationType.FILE_URI , 
+				allowEdit: true , 
+				targetWidth: 1000 , 
+				targetHeight: 1000 , 
+				EncodingType: Camera.EncodingType.PNG , 
+				MediaType: Camera.MediaType.ALLMEDIA , 
+				saveToPhotoAlbum: true
+			}
+		); 
+		
+		
+		function onSuccess(uri) {
+			alert(uri+"/n开始测试上传");
+			_uri = uri;
+			try{
+				var options = new FileUploadOptions();
+				options.fileKey="file";
+				options.fileName=uri.substr(uri.lastIndexOf('/')+1);
+				options.mimeType="text/plain";
+			}catch(e){
+				alert("错误啦:"+e.message);
+			}
+			alert(options.fileName);
+			alert(uri);
+
+			try{
+				var params = new Object();
+				params.value1 = "test";
+				params.value2 = "param";
+				options.params = params;
+			}catch(e){
+				alert(e.message);
+			}
+			try{
+				var ft = new FileTransfer();
+				alert("开始上传啦");
+				ft.upload(uri, encodeURI("http://192.168.0.110/freesailingadmin/test.ashx"), win, fail, options);
+			}catch(e){
+				alert("错误3:"+e.message);
+			}
+		}
+
+		function onFail(message) {
+			alert('Failed because: ' + message);
+		}
+
+		var win = function(r) {
+			alert("Code = " + r.responseCode);
+			alert("Response = " + r.response);
+			alert("Sent = " + r.bytesSent);
+			store.add({type:"picture" , url:_uri})
+		}
+
+		var fail = function(error) {
+			alert("An error has occurred: Code = " + error.code);
+			alert("upload error source " + error.source);
+			alert("upload error target " + error.target);
+		}
+
+	} , 
+
+    // Upload files to server
+    uploadFile: function(mediaFile) {
+
+        var ft = new FileTransfer(),
+            path = mediaFile.fullPath,
+            name = mediaFile.name;
+
+		ft.upload(path,
+			"http://192.168.0.110/freesailingadmin/test.ashx",
+			function(result) {
+				alert('Upload success: ' + result.responseCode);
+				alert(result.bytesSent + ' bytes sent');
+			},
+			function(error) {
+				var es = [
+					"Error uploading:" , 
+					"path: "+path , 
+					"code: "+error.code , 
+					"source: "+error.source , 
+					"target: "+error.target , 
+					"status: "+error.http_status
+				]
+				alert(es.join("\n"));
+			},
+			{fileName: name }
+		);
+
+	}
 
 });

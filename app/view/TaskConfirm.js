@@ -11,13 +11,14 @@ Ext.define("PenavicoMobile.view.TaskConfirm" ,{
 			]} , 
 			{
 				xtype: 'fieldset',
+				flex:1 , 
 				//instructions: '请输入用户名密码!',
 				items: [
 					{xtype: 'selectfield',label: '确认状态',name: 'plan_status' , required: true, options:[
 						{text:"已完成" , value:"已完成"} , 
 						{text:"未完成" , value:"未完成"}
 					] ,autoCapitalize: false , value:"已完成"},
-					{xtype: 'textareafield',label: '备注',name: 'memo' , allowBlank:false}					
+					{xtype: 'textareafield',label: '备注',name: 'memo' , allowBlank:false , flex:1}					
 				]
 			},
 			{xtype: 'button', text: '确认' , ui: 'confirm' , action:"save"}

@@ -10,9 +10,11 @@ Ext.define("PenavicoMobile.view.plan.Progress" ,{
 			]} , 
 			{
 				xtype: 'fieldset',
+				layout:"vbox" , 
+				defaults:{ style:"font-size:16px" , height:120} , 
 				items: [
-					{xtype: 'textfield',label: '计划进度',name: '计划进度'},
-					{xtype: 'textfield',label: '实际进度',name: '实际进度'}		,
+					{xtype: 'textareafield',label: '计划进度',name: '计划进度'},
+					{xtype: 'textareafield',label: '实际进度',name: '实际进度'}		,
 					{xtype: 'textareafield',label: '备注',name: '备注'}					
 				]
 			},
