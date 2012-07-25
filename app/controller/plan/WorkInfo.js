@@ -8,7 +8,8 @@
 			btnSaveProgress: "planProgress button[action=save]" , 
 
 			event: "planEvent" , 
-			btnSaveEvent: "planEvent button[action=save]"
+			btnSaveEvent: "planEvent button[action=save]" , 
+			eventMedia: "planEvent list"
 
 		},
 		control: {
@@ -247,6 +248,9 @@
 	} , 
 	//
 	getpicture: function(){
+		var store = this.getEventMedia().getStore();
+		var _uri = "";
+
 		navigator.camera.getPicture(
 			onSuccess, 
 			onFail, 
@@ -254,8 +258,8 @@
 				quality: 50,
 				destinationType: Camera.DestinationType.FILE_URI , 
 				allowEdit: true , 
-				targetWidth: 800 , 
-				targetHeight: 450 , 
+				targetWidth: 1000 , 
+				targetHeight: 1000 , 
 				EncodingType: Camera.EncodingType.PNG , 
 				MediaType: Camera.MediaType.ALLMEDIA , 
 				saveToPhotoAlbum: true
@@ -265,6 +269,7 @@
 		
 		function onSuccess(uri) {
 			alert(uri+"/n开始测试上传");
+			_uri = uri;
 			try{
 				var options = new FileUploadOptions();
 				options.fileKey="file";
@@ -273,6 +278,8 @@
 			}catch(e){
 				alert("错误啦:"+e.message);
 			}
+			alert(options.fileName);
+			alert(uri);
 
 			try{
 				var params = new Object();
@@ -300,6 +307,7 @@
 			alert("Code = " + r.responseCode);
 			alert("Response = " + r.response);
 			alert("Sent = " + r.bytesSent);
+			store.add({type:"picture" , url:_uri})
 		}
 
 		var fail = function(error) {

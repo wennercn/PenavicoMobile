@@ -29,16 +29,15 @@ Ext.define("PenavicoMobile.view.plan.Event" ,{
 						cls:"mediacontainer" , 
 						//style:"border: 1px solid #DDD;background: white;padding: 0;-webkit-border-radius: 0.4em;border-radius: 0.4em;overflow: hidden;" , 
 						store: {
-							fields: ['name', 'age'],
+							fields: ['type', 'url' , 'create_time'],
 							data: [
-								{name: 'Jamie',  age: 100},
-								{name: 'Rob',   age: 21},
-								{name: 'Tommy', age: 24},
-								{name: 'Jacky', age: 24},
-								{name: 'Ed',   age: 26}
+								{type: 'picture',  url:"http://192.168.0.110/sss.jpg" , create_time:"2012-11-12"} , 
+								{type: 'picture',  url:"http://192.168.0.110/sss.jpg" , create_time:"2012-11-12"} , 
+								{type: 'picture',  url:"http://192.168.0.110/sss.jpg" , create_time:"2012-11-12"} , 
+								{type: 'picture',  url:"http://192.168.0.110/sss.jpg" , create_time:"2012-11-12"}
 							]
 						},
-						itemTpl: '<div>{name} is {age} years old</div>'
+						itemTpl: '<div style="text-align:center">{type} <img src="{url}"/></div>'
 					})
 				]},
 				{xtype: 'button', text: '保存信息' , action:"save" , ui: 'confirm'}
