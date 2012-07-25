@@ -240,6 +240,7 @@
 
 	//录音
 	getaudio: function(){
+		var me = this;
 		// capture callback
 		var captureSuccess = function(mediaFiles) {
 			var i, path, len;
@@ -247,7 +248,7 @@
 				path = mediaFiles[i].fullPath;
 				alert(mediaFiles[i].fullPath);
 				try{
-					this.uploadFile(mediaFiles[i]); 
+					me.uploadFile(mediaFiles[i]); 
 				}catch(e){
 					alert(e.message);
 				}
@@ -265,13 +266,15 @@
 	} , 
 	//
 	getvideo: function(){
+		var me = this;
+
 		// 采集操作成功完成后的回调函数
 		function captureSuccess(mediaFiles) { 
 			var i, len; 
 			for (i = 0, len = mediaFiles.length; i < len; i += 1) { 
 				alert(mediaFiles[i].fullPath);
 				try{
-					this.uploadFile(mediaFiles[i]); 
+					me.uploadFile(mediaFiles[i]); 
 				}catch(e){
 					alert(e.message);
 				}
