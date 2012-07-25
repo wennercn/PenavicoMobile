@@ -264,7 +264,7 @@
 		navigator.device.capture.captureAudio(captureSuccess, captureError, {limit:2});
 	} , 
 	//
-	getVideo: function(){
+	getvideo: function(){
 		// 采集操作成功完成后的回调函数
 		function captureSuccess(mediaFiles) { 
 			var i, len; 
