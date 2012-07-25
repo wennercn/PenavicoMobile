@@ -262,21 +262,31 @@
 		
 		function onSuccess(uri) {
 			alert(uri+"/n开始测试上传");
-			var options = new FileUploadOptions();
-			options.fileKey="file";
-			options.fileName=fileURI.substr(fileURI.lastIndexOf('/')+1);
-			options.mimeType="text/plain";
-			
+			try{
+				var options = new FileUploadOptions();
+				options.fileKey="file";
+				options.fileName=fileURI.substr(fileURI.lastIndexOf('/')+1);
+				options.mimeType="text/plain";
+			}catch(e){
+				alert("错误啦:"+e.message);
+			}
 
-			var params = new Object();
-			params.value1 = "test";
-			params.value2 = "param";
+			try{
+				var params = new Object();
+				params.value1 = "test";
+				params.value2 = "param";
+				options.params = params;
+			}catch(e){
+				alert(e.message);
+			}
 
-			options.params = params;
-
-			var ft = new FileTransfer();
-			alert("开始上传啦");
-			ft.upload(fileURI, encodeURI("http://192.168.0.110/freesailingadmin/test.ashx"), win, fail, options);
+			try{
+				var ft = new FileTransfer();
+				alert("开始上传啦");
+				ft.upload(fileURI, encodeURI("http://192.168.0.110/freesailingadmin/test.ashx"), win, fail, options);
+			}catch(e){
+				alert("错误3:"+e.message);
+			}
 		}
 
 		function onFail(message) {
