@@ -239,12 +239,52 @@
 
 
 	//录音
-	getAudio: function(){
-	
+	getaudio: function(){
+		// capture callback
+		var captureSuccess = function(mediaFiles) {
+			var i, path, len;
+			for (i = 0, len = mediaFiles.length; i < len; i += 1) {
+				path = mediaFiles[i].fullPath;
+				alert(mediaFiles[i].fullPath);
+				try{
+					this.uploadFile(mediaFiles[i]); 
+				}catch(e){
+					alert(e.message);
+				}
+				// do something interesting with the file
+			}
+		};
+
+		// capture error callback
+		var captureError = function(error) {
+			navigator.notification.alert('Error code: ' + error.code, null, 'Capture Error');
+		};
+
+		// start audio capture
+		navigator.device.capture.captureAudio(captureSuccess, captureError, {limit:2});
 	} , 
 	//
 	getVideo: function(){
-	
+		// 采集操作成功完成后的回调函数
+		function captureSuccess(mediaFiles) { 
+			var i, len; 
+			for (i = 0, len = mediaFiles.length; i < len; i += 1) { 
+				alert(mediaFiles[i].fullPath);
+				try{
+					this.uploadFile(mediaFiles[i]); 
+				}catch(e){
+					alert(e.message);
+				}
+			}        
+		} 
+
+		// 采集操作出错后的回调函数 
+		function captureError(error) { 
+			var msg = 'An error occurred during capture: ' + error.code; 
+			navigator.notification.alert(msg, null, 'Uh oh!'); 
+		} 
+		navigator.device.capture.captureVideo(captureSuccess, captureError, {limit: 2}); 
+
 	} , 
 	//
 	getpicture: function(){
@@ -317,6 +357,24 @@
 		}
 
 
-	}
+	} , 
+
+    // Upload files to server
+    uploadFile: function(mediaFile) {
+        var ft = new FileTransfer(),
+            path = mediaFile.fullPath,
+            name = mediaFile.name;
+
+        ft.upload(path,
+            "http://192.168.0.110/freesailingadmin/test.ashx",
+            function(result) {
+                alert('Upload success: ' + result.responseCode);
+                alert(result.bytesSent + ' bytes sent');
+            },
+            function(error) {
+				alert('Error uploading file ' + path + ': ' + error.code);
+            },
+            {fileName: name });   
+    }
 
 });
