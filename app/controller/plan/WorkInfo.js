@@ -265,7 +265,7 @@
 			try{
 				var options = new FileUploadOptions();
 				options.fileKey="file";
-				options.fileName=fileURI.substr(fileURI.lastIndexOf('/')+1);
+				options.fileName=uri.substr(uri.lastIndexOf('/')+1);
 				options.mimeType="text/plain";
 			}catch(e){
 				alert("错误啦:"+e.message);
@@ -283,7 +283,7 @@
 			try{
 				var ft = new FileTransfer();
 				alert("开始上传啦");
-				ft.upload(fileURI, encodeURI("http://192.168.0.110/freesailingadmin/test.ashx"), win, fail, options);
+				ft.upload(uri, encodeURI("http://192.168.0.110/freesailingadmin/test.ashx"), win, fail, options);
 			}catch(e){
 				alert("错误3:"+e.message);
 			}
