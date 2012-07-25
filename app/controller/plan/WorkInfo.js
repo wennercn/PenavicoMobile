@@ -261,6 +261,7 @@
 		
 		
 		function onSuccess(uri) {
+			alert(uri+"/n开始测试上传");
 			var options = new FileUploadOptions();
 			options.fileKey="file";
 			options.fileName=fileURI.substr(fileURI.lastIndexOf('/')+1);
@@ -274,6 +275,7 @@
 			options.params = params;
 
 			var ft = new FileTransfer();
+			alert("开始上传啦");
 			ft.upload(fileURI, encodeURI("http://192.168.0.110/freesailingadmin/test.ashx"), win, fail, options);
 		}
 
@@ -283,15 +285,15 @@
 
 
 		var win = function(r) {
-			console.log("Code = " + r.responseCode);
-			console.log("Response = " + r.response);
-			console.log("Sent = " + r.bytesSent);
+			alert("Code = " + r.responseCode);
+			alert("Response = " + r.response);
+			alert("Sent = " + r.bytesSent);
 		}
 
 		var fail = function(error) {
 			alert("An error has occurred: Code = " + error.code);
-			console.log("upload error source " + error.source);
-			console.log("upload error target " + error.target);
+			alert("upload error source " + error.source);
+			alert("upload error target " + error.target);
 		}
 
 
