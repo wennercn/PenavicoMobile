@@ -254,8 +254,11 @@
 				quality: 50,
 				destinationType: Camera.DestinationType.FILE_URI , 
 				allowEdit: true , 
+				targetWidth: 800 , 
+				targetHeight: 450 , 
 				EncodingType: Camera.EncodingType.PNG , 
-				MediaType: Camera.MediaType.PICTURE
+				MediaType: Camera.MediaType.ALLMEDIA , 
+				saveToPhotoAlbum: true
 			}
 		); 
 		
@@ -279,7 +282,6 @@
 			}catch(e){
 				alert(e.message);
 			}
-
 			try{
 				var ft = new FileTransfer();
 				alert("开始上传啦");
