@@ -26,7 +26,11 @@
 			} , 
 			"button[action=back2planlist]": {
 				tap: "backToList"
+			} , 
+			"toolbar[itemId=mediabar] button" :{
+				tap: "getMedia"
 			}
+
 		}
 	} , 
 	
@@ -225,5 +229,45 @@
 		}	
 		Ext.Msg.alert("成功" , "信息保存成功" , this.backToList , this);
 	} , 
+
+
+	getMedia: function(btn){
+		var action = btn.config.action;
+		this["get"+action]();	
+	} , 
+
+
+	//录音
+	getAudio: function(){
+	
+	} , 
+	//
+	getVideo: function(){
+	
+	} , 
+	//
+	getpicture: function(){
+		navigator.camera.getPicture(
+			onSuccess, 
+			onFail, 
+			{
+				quality: 50,
+				destinationType: Camera.DestinationType.FILE_URI , 
+				allowEdit: true , 
+				EncodingType: Camera.EncodingType.PNG , 
+				MediaType: Camera.MediaType.PICTURE
+			}
+		); 
+		
+		
+		function onSuccess(url) {
+			alert(url)
+
+		}
+
+		function onFail(message) {
+			alert('Failed because: ' + message);
+		}
+	}
 
 });

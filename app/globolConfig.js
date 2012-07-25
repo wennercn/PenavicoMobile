@@ -1,6 +1,6 @@
 ﻿Ext.define("PenavicoMobile.globolConfig" , {
 	singleton: true , 
-	wspath: Ext.os.is.Android ? "http://10.128.60.49/penavico/ws/mobile/" : "http://192.168.0.159/penavico2/ws/mobile/" , 
+	wspath: Ext.os.is.Android ? "http://10.128.60.49/penavico/ws/mobile/" : "http://10.128.60.49/penavico/ws/mobile/" , 
 	ServerDate: new Date() , 
 	constructor: function(config) {
 		var me = this;
