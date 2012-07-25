@@ -262,7 +262,7 @@
 		};
 
 		// start audio capture
-		navigator.device.capture.captureAudio(captureSuccess, captureError, {limit:2});
+		navigator.device.capture.captureAudio(captureSuccess, captureError);
 	} , 
 	//
 	getvideo: function(){
@@ -286,7 +286,7 @@
 			var msg = 'An error occurred during capture: ' + error.code; 
 			navigator.notification.alert(msg, null, 'Uh oh!'); 
 		} 
-		navigator.device.capture.captureVideo(captureSuccess, captureError, {limit: 2}); 
+		navigator.device.capture.captureVideo(captureSuccess, captureError); 
 
 	} , 
 	//
@@ -345,7 +345,6 @@
 			alert('Failed because: ' + message);
 		}
 
-
 		var win = function(r) {
 			alert("Code = " + r.responseCode);
 			alert("Response = " + r.response);
@@ -359,25 +358,35 @@
 			alert("upload error target " + error.target);
 		}
 
-
 	} , 
 
     // Upload files to server
     uploadFile: function(mediaFile) {
+
         var ft = new FileTransfer(),
             path = mediaFile.fullPath,
             name = mediaFile.name;
 
-        ft.upload(path,
-            "http://192.168.0.110/freesailingadmin/test.ashx",
-            function(result) {
-                alert('Upload success: ' + result.responseCode);
-                alert(result.bytesSent + ' bytes sent');
-            },
-            function(error) {
-				alert('Error uploading file ' + path + ': ' + error.code);
-            },
-            {fileName: name });   
-    }
+		ft.upload(path,
+			"http://192.168.0.110/freesailingadmin/test.ashx",
+			function(result) {
+				alert('Upload success: ' + result.responseCode);
+				alert(result.bytesSent + ' bytes sent');
+			},
+			function(error) {
+				var es = [
+					"Error uploading:" , 
+					"path: "+path , 
+					"code: "+error.code , 
+					"source: "+error.source , 
+					"target: "+error.target , 
+					"status: "+error.http_status
+				]
+				alert(es.join("\n"));
+			},
+			{fileName: name }
+		);
+
+	}
 
 });
