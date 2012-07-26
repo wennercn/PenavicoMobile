@@ -337,6 +337,7 @@
 
 	//捕获媒体文件
 	getMedia: function(btn){
+		alert(Ext.encode(Ext.Viewport.getSize()))
 		var store = this.getMediaList().getStore();
 		store.insert(0 , {type:"picture" , url:"Fasdfasd"})
 		var action = btn.config.action;
