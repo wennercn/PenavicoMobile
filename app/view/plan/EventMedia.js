@@ -20,12 +20,26 @@
 				store: {
 					fields: ['type', 'url' , 'create_time'],
 					data: [
-						{type: 'picture',  url:"http://10.128.60.49/docs/st/examples/carousel/resources/photos/Food/1.jpg" , create_time:"2012-11-12"} , 
-						{type: 'picture',  url:"http://10.128.60.49/docs/st/examples/carousel/resources/photos/Food/1.jpg" , create_time:"2012-11-12"} , 
+						{type: 'audio',  url:"http://10.128.60.49/docs/st/examples/carousel/resources/photos/Food/1.jpg" , create_time:"2012-11-12"} , 
+						{type: 'video',  url:"http://10.128.60.49/docs/st/examples/carousel/resources/photos/Food/1.jpg" , create_time:"2012-11-12"} , 
 						{type: 'picture',  url:"http://10.128.60.49/docs/st/examples/carousel/resources/photos/Food/1.jpg" , create_time:"2012-11-12"}
 					]
 				},
-				itemTpl: '<div class="mediaitemwrap"><div class="mediaitem {type}" style="background-image:url({url})"></div></div>'
+				itemTpl:new Ext.XTemplate(
+					'<tpl for=".">',
+					'<div class="mediaitemwrap"> ',
+						'<tpl switch="type">',
+							'<tpl case="audio">',
+								'<div class="mediaitem {type}"></div>' , 
+							'<tpl case="video">',
+								'<div class="mediaitem {type}"></div>' , 
+							'<tpl default>',
+								'<div class="mediaitem {type}" style="background-image:url({url})"></div>' , 
+						'</tpl>',
+					'</div>' , 
+					'</tpl>'
+				)
+				//itemTpl: '<div class="mediaitemwrap"><div class="mediaitem {type}" style="background-image:url({url})"></div></div>'
 			})
 		]
 	} , 

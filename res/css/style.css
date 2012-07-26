@@ -26,15 +26,15 @@
 	-webkit-border-radius: 0.4em;
 	border-radius: 0.4em;
 	border:#ddd solid 2px;
-	padding:10px;
+	padding:6px;
 	overflow: hidden;
 }
 
 .mediaitem {
 	text-align:center;
 	background-repeat:no-repeat;
-	width:180px;
-	height:300px;
+	width:150px;
+	height:260px;
 	-webkit-border-radius: 0.4em;
 	border-radius: 0.4em;
 	cursor:pointer
@@ -42,3 +42,5 @@
 
 
 .picture {background-size: auto 100%;background-position:center}
+.video {background-image:url(../images/video_bg.png);background-position:center}
+.audio {background-image:url(../images/audio_bg.png);background-position:center}

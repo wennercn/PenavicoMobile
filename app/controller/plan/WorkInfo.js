@@ -37,10 +37,18 @@
 			"button[action=back2planlist]": {
 				tap: "backToList"
 			} , 
-			"toolbar[itemId=mediabar] button" :{
+			"toolbar[itemId=mediabar] button[action=audio]" :{
 				tap: "getMedia"
 			} , 
+			"toolbar[itemId=mediabar] button[action=picture]" :{
+				tap: "showSheet"
+			} , 
+			"toolbar[itemId=mediabar] button[action=video]" :{
+				tap: "showSheet"
+			} , 
+
 			mediaList: {
+				//点击图片
 				itemtap: function(dv , ix , target , record , e){
 					if (!this.mediaOverlay) this.mediaOverlay = {};
 					var type = record.get("type");
@@ -220,13 +228,7 @@
 		var media = this.getEventMedia();
 		media.setMasked({ xtype: 'loadmask'  , message:"读取突发事件附件..."});	
 		var plan = media.plan;
-		media.setMasked(false);
-
-
-		
-
-
-		
+		media.setMasked(false);	
 	
 	} , 
 
@@ -293,9 +295,8 @@
 	showSheet: function(btn){
 		var me = this;
 
-		if (!this.sheets){
-			this.sheets = {};
-		}
+		if (!this.sheets) this.sheets = {};
+
 		var action = btn.config.action;
 		var sheet = this.sheets[action];
 		if (!sheet){
@@ -310,18 +311,20 @@
 					break;
 				case "video":
 					btns = [
-						{text:"拍摄视频" , ui:"confirm"}
+						{text:"拍摄视频" , ui:"confirm" , handler:this.getvideo , scope:this}
 					]
 					txt = "手机相册";
 					break;
 				case "audio":
 					btns=[
-						{text:"录制音频" , ui:"confirm"}
+						{text:"录制音频" , ui:"confirm" , handler:this.getaudio , scope:this}
 					]
 					txt = "手机文件";
 					break;		
 			}
-			btns.push({text:"从"+txt+"中获取"});
+			btns.push({text:"从"+txt+"中获取" , handler:function(){
+				this.getLocalFile(action);
+			} , scope:this});
 
 			btns.push({text:"取消" , ui:"dark" , handler:function(btn){
 				btn.up("actionsheet").hide()
@@ -334,11 +337,33 @@
 		//this["get"+action]();	
 	} , 
 
+	//获取本地文件
+	getLocalFile: function(type){
+		var me = this;
+
+		//获取照片
+		navigator.camera.getPicture(
+			function(uri){
+				me.getFileToUpload(uri , type);
+			} , 
+			me._getpicture, 
+			function(){
+				alert('本地获取文件失败: ' + message);
+				return;
+			}, {
+				quality: 50,
+				sourceType: 2 , 
+				MediaType: type == "video" ? 1 : 0 , 
+				destinationType: 1 , 
+				targetWidth: 600 , 
+				targetHeight: 600
+			}
+		);	
+	} , 
 
 	//捕获媒体文件
 	getMedia: function(btn){
-		alert(Ext.encode(Ext.Viewport.getSize()))
-		var action = btn.config.action;
+		var action = Ext.isString(btn) ? btn : btn.config.action;
 		this["get"+action]();	
 	} , 
 
@@ -352,9 +377,8 @@
 			var i, path, len;
 			for (i = 0, len = mediaFiles.length; i < len; i += 1) {
 				path = mediaFiles[i].fullPath;
-				alert(mediaFiles[i].fullPath);
 				try{
-					me.uploadFile(mediaFiles[i]); 
+					me.uploadFile(mediaFiles[i] , "audio"); 
 				}catch(e){
 					alert(e.message);
 				}
@@ -370,7 +394,8 @@
 		// start audio capture
 		navigator.device.capture.captureAudio(captureSuccess, captureError);
 	} , 
-	//
+
+	//摄像
 	getvideo: function(){
 		var me = this;
 
@@ -378,9 +403,8 @@
 		function captureSuccess(mediaFiles) { 
 			var i, len; 
 			for (i = 0, len = mediaFiles.length; i < len; i += 1) { 
-				alert(mediaFiles[i].fullPath);
 				try{
-					me.uploadFile(mediaFiles[i]); 
+					me.uploadFile(mediaFiles[i] , "video"); 
 				}catch(e){
 					alert(e.message);
 				}
@@ -402,7 +426,7 @@
 		//获取照片
 		navigator.camera.getPicture(
 			function(uri){
-				me._getpicture(uri);
+				me.getFileToUpload(uri , "picture");
 			} , 
 			me._getpicture, 
 			function(){
@@ -410,34 +434,32 @@
 				return;
 			}, {
 				quality: 50,
-				destinationType: Camera.DestinationType.FILE_URI , 
-				allowEdit: true , 
-				targetWidth: 1000 , 
-				targetHeight: 1000 , 
-				EncodingType: Camera.EncodingType.PNG , 
-				MediaType: Camera.MediaType.ALLMEDIA , 
+				destinationType: 1 , 
+				targetWidth: 600 , 
+				targetHeight: 600 , 
+				sourceType: 1 , 
 				saveToPhotoAlbum: true
 			}
 		); 
 	} , 
-	_getpicture: function(uri){
+	
+	//将URI转换为fullpath上传
+	getFileToUpload: function(uri , type){
 			var me = this;		
 			window.resolveLocalFileSystemURI(uri, function(file){
 				alert("转换URI:"+file.name+"--"+file.fullPath);
-				alert(me.uploadFile);
 				try{
-				me.uploadFile(file);			
+				me.uploadFile(file , type);			
 				}catch(e){
 					alert("上传错误:"+e.message);
 				}
 			},function(evt){
 				alert("转换URI错误:"+evt.target.error.code);				
-			});	
-
+			});
 	} , 
 
     //上传文件
-    uploadFile: function(file) {
+    uploadFile: function(file , type) {
 		var me = this;
 
 		me.getEvent().setMasked({ xtype: 'loadmask'  , message:"上传文件,请稍候..."});		
@@ -451,7 +473,7 @@
 				opt = new FileUploadOptions();
 
 		opt.fileName = name;
-		opt.fileKey = file;
+		opt.fileKey = "file";
 		opt.mimeType = "text/plain";
 		opt.params = {
 			value1: "isvalue1" , 
@@ -471,7 +493,7 @@
 					"返回:"+result.response
 				]
 				alert(ss.join("\n"));
-				store.insert(0 , {type:"picture" , url:path})
+				store.insert(0 , {type:type , url:path})
 			},
 			function(error) {
 				me.getEvent().setMasked(false);
