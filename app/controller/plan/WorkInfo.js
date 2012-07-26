@@ -305,25 +305,35 @@
 			switch (action){
 				case "picture":
 					btns = [
-						{text:"拍摄照片" , ui:"confirm" , handler:this.getpicture , scope:this}
+						{text:"拍摄照片" , ui:"confirm" , handler:function(btn){
+							this.getpicture();
+							btn.up("actionsheet").hide()
+						} , scope:this}
 					]
 					txt = "相册";
 					break;
 				case "video":
 					btns = [
-						{text:"拍摄视频" , ui:"confirm" , handler:this.getvideo , scope:this}
+						{text:"拍摄视频" , ui:"confirm" , handler:function(btn){
+							this.getvideo();
+							btn.up("actionsheet").hide()
+						} , scope:this}
 					]
 					txt = "手机相册";
 					break;
 				case "audio":
 					btns=[
-						{text:"录制音频" , ui:"confirm" , handler:this.getaudio , scope:this}
+						{text:"录制音频" , ui:"confirm" , handler:function(btn){
+							this.getaudio();
+							btn.up("actionsheet").hide()
+						} , scope:this}
 					]
 					txt = "手机文件";
 					break;		
 			}
-			btns.push({text:"从"+txt+"中获取" , handler:function(){
+			btns.push({text:"从"+txt+"中获取" , handler:function(btn){
 				this.getLocalFile(action);
+				btn.up("actionsheet").hide()
 			} , scope:this});
 
 			btns.push({text:"取消" , ui:"dark" , handler:function(btn){
@@ -352,7 +362,7 @@
 				return;
 			}, {
 				quality: 50,
-				sourceType: 2 , 
+				sourceType: 0 , 
 				MediaType: type == "video" ? 1 : 0 , 
 				destinationType: 1 , 
 				targetWidth: 600 , 
