@@ -13,5 +13,32 @@
 }
 
 
-.mediacontainer {background:none !important}
-.mediacontainer .x-list-container {padding:0}
+.mediacontainer {padding:10px 0 0 10px}
+
+.media_selected .mediaitemwrap {
+	background:#ddd;border-color:#aaa
+}
+.media_pressed .mediaitemwrap {background:#ffcc00;border-color:#ff6600}
+
+.mediaitemwrap {	
+	background-color:#fff;
+	margin:0 10px 10px 0;
+	-webkit-border-radius: 0.4em;
+	border-radius: 0.4em;
+	border:#ddd solid 2px;
+	padding:10px;
+	overflow: hidden;
+}
+
+.mediaitem {
+	text-align:center;
+	background-repeat:no-repeat;
+	width:230px;
+	height:400px;
+	-webkit-border-radius: 0.4em;
+	border-radius: 0.4em;
+	cursor:pointer
+}
+
+
+.picture {background-size: auto 100%;background-position:center}

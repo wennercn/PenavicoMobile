@@ -47,7 +47,9 @@ Ext.application({
 		"Tasks" , 
 		"plan.List" , 
 		"plan.Progress" , 
-		"plan.Event"
+		"plan.EventWrap" , 
+		"plan.EventForm" , 
+		"plan.EventMedia"
     ],
 
 	//controllers

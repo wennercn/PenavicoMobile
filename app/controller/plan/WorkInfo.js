@@ -7,9 +7,14 @@
 			progress: "planProgress" , 
 			btnSaveProgress: "planProgress button[action=save]" , 
 
-			event: "planEvent" , 
-			btnSaveEvent: "planEvent button[action=save]" , 
-			eventMedia: "planEvent list"
+			event: "planEventWrap" , 
+
+			eventForm: "planEventForm" , 
+			btnSaveEvent: "planEventForm button[action=save]" ,
+			
+			eventMedia: "planEventMedia" ,
+			btnAddMedia: "planEventMedia button[action=addmedia]" , 
+			mediaList: "planEventMedia dataview"
 
 		},
 		control: {
@@ -20,6 +25,10 @@
 				tap: "saveProgress"
 			} , 
 			event: {
+				setplan: function(plan){
+					this.getEventForm().setPlan(plan);
+					this.getEventMedia().setPlan(plan);
+				} , 
 				activate: "loadEvent"
 			} , 
 			btnSaveEvent: {
@@ -30,6 +39,39 @@
 			} , 
 			"toolbar[itemId=mediabar] button" :{
 				tap: "getMedia"
+			} , 
+			mediaList: {
+				itemtap: function(dv , ix , target , record , e){
+					if (!this.mediaOverlay) this.mediaOverlay = {};
+					var type = record.get("type");
+					var overlay = this.mediaOverlay[type];
+					if (!overlay){
+
+						overlay = Ext.create("Ext.Panel" , {
+							modal: true,
+							hideOnMaskTap: true,
+							hidden: true,
+							layout:"card" , 
+							scrollable: true,
+							width:"90%" , 
+							height:"90%" , 
+							style:"text-align:center" , 
+							centered:true , 
+							showAnimation: {type:"popIn" , duration: 250 , easing: "ease-out"} , 
+							hideAnimation: {type:"popOut" , duration: 250 , easing: "ease-out"}			
+						});
+
+						this.mediaOverlay[type] = overlay;
+						//overlay.add({xtype:"image" , src:record.get("url")});
+						overlay.setHtml("<img src='"+record.get("url")+"'>");
+						Ext.Viewport.add(overlay);
+
+					}
+					//overlay.setSrc(record.get("url"));
+					overlay.show();
+
+				}
+
 			}
 
 		}
@@ -144,8 +186,10 @@
 	loadEvent: function(){
 		var GC = this.getApplication().GC;
 		var wspath = GC.wspath;
-		var form = this.getEvent();
-		form.setMasked({ xtype: 'loadmask'  , message:"读取突发事件..."});		
+
+				//获取FORM
+		var form = this.getEventForm();
+		form.setMasked({ xtype: 'loadmask'  , message:"读取突发事件信息..."});		
 		var plan = form.plan;
 		Ext.Ajax.request({
 			url: wspath+"workinfo.asmx/GetWorkInfo" , 
@@ -170,6 +214,19 @@
 			} , 
 			scope:this		
 		})
+
+		
+		//获取多媒体附件
+		var media = this.getEventMedia();
+		media.setMasked({ xtype: 'loadmask'  , message:"读取突发事件附件..."});	
+		var plan = media.plan;
+		media.setMasked(false);
+
+
+		
+
+
+		
 	
 	} , 
 
@@ -232,6 +289,53 @@
 	} , 
 
 
+	//showsheet
+	showSheet: function(btn){
+		var me = this;
+
+		if (!this.sheets){
+			this.sheets = {};
+		}
+		var action = btn.config.action;
+		var sheet = this.sheets[action];
+		if (!sheet){
+			var btns = [];
+			var txt = "";
+			switch (action){
+				case "picture":
+					btns = [
+						{text:"拍摄照片" , ui:"confirm" , handler:this.getpicture , scope:this}
+					]
+					txt = "相册";
+					break;
+				case "video":
+					btns = [
+						{text:"拍摄视频" , ui:"confirm"}
+					]
+					txt = "手机相册";
+					break;
+				case "audio":
+					btns=[
+						{text:"录制音频" , ui:"confirm"}
+					]
+					txt = "手机文件";
+					break;		
+			}
+			btns.push({text:"从"+txt+"中获取"});
+
+			btns.push({text:"取消" , ui:"dark" , handler:function(btn){
+				btn.up("actionsheet").hide()
+			}})
+			sheet = this.sheets[action] = Ext.create("Ext.ActionSheet" , {items: btns});
+			Ext.Viewport.add(sheet);
+		}
+		sheet.show();
+
+		//this["get"+action]();	
+	} , 
+
+
+	//捕获媒体文件
 	getMedia: function(btn){
 		var action = btn.config.action;
 		this["get"+action]();	
@@ -241,6 +345,7 @@
 	//录音
 	getaudio: function(){
 		var me = this;
+
 		// capture callback
 		var captureSuccess = function(mediaFiles) {
 			var i, path, len;
@@ -289,8 +394,35 @@
 		navigator.device.capture.captureVideo(captureSuccess, captureError); 
 
 	} , 
-	//
+	
 	getpicture: function(){
+		var me = this;
+
+		// 采集操作成功完成后的回调函数
+		function captureSuccess(mediaFiles) { 
+			var i, len; 
+			for (i = 0, len = mediaFiles.length; i < len; i += 1) { 
+				alert(mediaFiles[i].fullPath);
+				try{
+					me.uploadFile(mediaFiles[i]); 
+				}catch(e){
+					alert(e.message);
+				}
+			}        
+		} 
+
+		// 采集操作出错后的回调函数 
+		function captureError(error) { 
+			var msg = 'An error occurred during capture: ' + error.code; 
+			navigator.notification.alert(msg, null, 'Uh oh!'); 
+		} 
+
+		navigator.device.capture.captureVideo(captureSuccess, captureError); 
+	} , 
+
+	//获取照片
+	getpicture1: function(){
+		console.log(this)
 		var store = this.getEventMedia().getStore();
 		var _uri = "";
 
@@ -366,12 +498,13 @@
         var ft = new FileTransfer(),
             path = mediaFile.fullPath,
             name = mediaFile.name;
-
+		var store = this.getMediaList().getStore();
 		ft.upload(path,
 			"http://192.168.0.110/freesailingadmin/test.ashx",
 			function(result) {
 				alert('Upload success: ' + result.responseCode);
 				alert(result.bytesSent + ' bytes sent');
+				store.add({type:"picture" , url:_uri})
 			},
 			function(error) {
 				var es = [
