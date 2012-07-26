@@ -401,6 +401,9 @@
 
 		//获取照片
 		navigator.camera.getPicture(
+			function(uri){
+				me._getpicture(uri);
+			} , 
 			me._getpicture, 
 			function(){
 				alert('获取照片失败: ' + message);
@@ -418,10 +421,10 @@
 		); 
 	} , 
 	_getpicture: function(uri){
-			var me = this;
-		
+			var me = this;		
 			window.resolveLocalFileSystemURI(uri, function(file){
 				alert("转换URI:"+file.name+"--"+file.fullPath);
+				alert(me.uploadFile);
 				try{
 				me.uploadFile(file);			
 				}catch(e){
