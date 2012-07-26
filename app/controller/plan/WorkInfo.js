@@ -338,8 +338,6 @@
 	//捕获媒体文件
 	getMedia: function(btn){
 		alert(Ext.encode(Ext.Viewport.getSize()))
-		var store = this.getMediaList().getStore();
-		store.insert(0 , {type:"picture" , url:"Fasdfasd"})
 		var action = btn.config.action;
 		this["get"+action]();	
 	} , 
@@ -401,38 +399,13 @@
 	getpicture: function(){
 		var me = this;
 
-		// 采集操作成功完成后的回调函数
-		function captureSuccess(mediaFiles) { 
-			var i, len; 
-			for (i = 0, len = mediaFiles.length; i < len; i += 1) { 
-				alert(mediaFiles[i].fullPath);
-				try{
-					me.uploadFile(mediaFiles[i]); 
-				}catch(e){
-					alert(e.message);
-				}
-			}        
-		} 
-
-		// 采集操作出错后的回调函数 
-		function captureError(error) { 
-			var msg = 'An error occurred during capture: ' + error.code; 
-			navigator.notification.alert(msg, null, 'Uh oh!'); 
-		} 
-
-		navigator.device.capture.captureImage(captureSuccess, captureError); 
-	} , 
-
-	//获取照片
-	getpicture1: function(){
-		console.log(this)
-		var store = this.getEventMedia().getStore();
-		var _uri = "";
-
+		//获取照片
 		navigator.camera.getPicture(
-			onSuccess, 
-			onFail, 
-			{
+			me._getpicture, 
+			function(){
+				alert('获取照片失败: ' + message);
+				return;
+			}, {
 				quality: 50,
 				destinationType: Camera.DestinationType.FILE_URI , 
 				allowEdit: true , 
@@ -443,80 +416,55 @@
 				saveToPhotoAlbum: true
 			}
 		); 
-		
-		
-		function onSuccess(uri) {
-			alert(uri+"/n开始测试上传");
-			_uri = uri;
-			try{
-				var options = new FileUploadOptions();
-				options.fileKey="file";
-				options.fileName=uri.substr(uri.lastIndexOf('/')+1);
-				options.mimeType="text/plain";
-			}catch(e){
-				alert("错误啦:"+e.message);
-			}
-			alert(options.fileName);
-			alert(uri);
-
-			try{
-				var params = new Object();
-				params.value1 = "test";
-				params.value2 = "param";
-				options.params = params;
-			}catch(e){
-				alert(e.message);
-			}
-			try{
-				var ft = new FileTransfer();
-				alert("开始上传啦");
-				ft.upload(uri, encodeURI("http://192.168.0.110/freesailingadmin/test.ashx"), win, fail, options);
-			}catch(e){
-				alert("错误3:"+e.message);
-			}
-		}
-
-		function onFail(message) {
-			alert('Failed because: ' + message);
-		}
-
-		var win = function(r) {
-			alert("Code = " + r.responseCode);
-			alert("Response = " + r.response);
-			alert("Sent = " + r.bytesSent);
-			store.add({type:"picture" , url:_uri})
-		}
-
-		var fail = function(error) {
-			alert("An error has occurred: Code = " + error.code);
-			alert("upload error source " + error.source);
-			alert("upload error target " + error.target);
-		}
-
+	} , 
+	_getpicture: function(uri){
+			var me = this;
+			window.resolveLocalFileSystemURI("file:///example.txt", function(file){
+				alert("转换URI:"+file.name+"--"+file.fullPath);
+				me.uploadFile(file);			
+			},function(evt){
+				alert("转换URI错误:"+evt.target.error.code);				
+			});	
 	} , 
 
-    // Upload files to server
-    uploadFile: function(mediaFile) {
+    //上传文件
+    uploadFile: function(file) {
+		var me = this;
+
+		me.getEvent().setMasked({ xtype: 'loadmask'  , message:"上传文件,请稍候..."});		
+
 		var GC = this.getApplication().GC;
 		var wspath = GC.wspath;
 
-        var ft = new FileTransfer(),
-            path = mediaFile.fullPath,
-            name = mediaFile.name;
+        var	ft = new FileTransfer() , 
+				path = file.fullPath , 
+				name = file.name , 
+				opt = new FileUploadOptions();
+
+		opt.fileName = name;
+		opt.fileKey = file;
+		opt.mimeType = "text/plain";
+		opt.params = {
+			value1: "isvalue1" , 
+			value2: "isvalue2"
+		}
+
 		var store = this.getMediaList().getStore();
 
-		ft.upload(path,
-			wspath+"test.ashx",
+		ft.upload(
+			path,
+			encodeURI(wspath+"test.ashx"),
 			function(result) {
-				alert('Upload success: ' + result.responseCode);
-				alert(result.bytesSent + ' bytes sent');
-				try{
+				me.getEvent().setMasked(false);		
+				var ss = [
+					"上传成功:"+result.responseCode , 
+					"大小:"+result.bytesSent , 
+					"返回:"+result.response
+				]
 				store.insert(0 , {type:"picture" , url:path})
-				}catch(e){
-					alert(e.message)
-				}
 			},
 			function(error) {
+				me.getEvent().setMasked(false);
 				var es = [
 					"Error uploading:" , 
 					"path: "+path , 
@@ -527,7 +475,7 @@
 				]
 				alert(es.join("\n"));
 			},
-			{fileName: name }
+			params
 		);
 
 	}
