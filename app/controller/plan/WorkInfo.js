@@ -417,7 +417,7 @@
 			navigator.notification.alert(msg, null, 'Uh oh!'); 
 		} 
 
-		navigator.device.capture.captureVideo(captureSuccess, captureError); 
+		navigator.device.capture.captureImage(captureSuccess, captureError); 
 	} , 
 
 	//获取照片
