@@ -419,12 +419,18 @@
 	} , 
 	_getpicture: function(uri){
 			var me = this;
-			window.resolveLocalFileSystemURI("file:///example.txt", function(file){
+		
+			try{
+			window.resolveLocalFileSystemURI(uri, function(file){
 				alert("转换URI:"+file.name+"--"+file.fullPath);
 				me.uploadFile(file);			
 			},function(evt){
 				alert("转换URI错误:"+evt.target.error.code);				
 			});	
+			}catch(e){
+				alert("转换异常:"+e.message);			
+			}
+
 	} , 
 
     //上传文件
