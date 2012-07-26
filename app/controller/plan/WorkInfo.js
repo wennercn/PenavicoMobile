@@ -337,6 +337,8 @@
 
 	//捕获媒体文件
 	getMedia: function(btn){
+		var store = this.getMediaList().getStore();
+		store.insert(0 , {type:"picture" , url:"Fasdfasd"})
 		var action = btn.config.action;
 		this["get"+action]();	
 	} , 
@@ -507,7 +509,11 @@
 			function(result) {
 				alert('Upload success: ' + result.responseCode);
 				alert(result.bytesSent + ' bytes sent');
-				store.add({type:"picture" , url:_uri})
+				try{
+				store.insert(0 , {type:"picture" , url:path})
+				}catch(e){
+					alert(e.message)
+				}
 			},
 			function(error) {
 				var es = [
