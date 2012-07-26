@@ -420,16 +420,16 @@
 	_getpicture: function(uri){
 			var me = this;
 		
-			try{
 			window.resolveLocalFileSystemURI(uri, function(file){
 				alert("转换URI:"+file.name+"--"+file.fullPath);
+				try{
 				me.uploadFile(file);			
+				}catch(e){
+					alert("上传错误:"+e.message);
+				}
 			},function(evt){
 				alert("转换URI错误:"+evt.target.error.code);				
 			});	
-			}catch(e){
-				alert("转换异常:"+e.message);			
-			}
 
 	} , 
 
@@ -467,6 +467,7 @@
 					"大小:"+result.bytesSent , 
 					"返回:"+result.response
 				]
+				alert(ss.join("\n"));
 				store.insert(0 , {type:"picture" , url:path})
 			},
 			function(error) {
