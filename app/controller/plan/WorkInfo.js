@@ -494,13 +494,16 @@
 
     // Upload files to server
     uploadFile: function(mediaFile) {
+		var GC = this.getApplication().GC;
+		var wspath = GC.wspath;
 
         var ft = new FileTransfer(),
             path = mediaFile.fullPath,
             name = mediaFile.name;
 		var store = this.getMediaList().getStore();
+
 		ft.upload(path,
-			"http://192.168.0.110/freesailingadmin/test.ashx",
+			wspath+"test.ashx",
 			function(result) {
 				alert('Upload success: ' + result.responseCode);
 				alert(result.bytesSent + ' bytes sent');

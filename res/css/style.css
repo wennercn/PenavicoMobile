@@ -33,8 +33,8 @@
 .mediaitem {
 	text-align:center;
 	background-repeat:no-repeat;
-	width:230px;
-	height:400px;
+	width:180px;
+	height:300px;
 	-webkit-border-radius: 0.4em;
 	border-radius: 0.4em;
 	cursor:pointer
