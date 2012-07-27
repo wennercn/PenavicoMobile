@@ -59,7 +59,8 @@ Ext.application({
 		"Login" , 
 		"Task" , 
 		"plan.List" , 
-		"plan.WorkInfo"
+		"plan.WorkInfo" , 
+		"plan.EventMedia"
 	] ,
 
     viewport: {

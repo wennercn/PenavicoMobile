@@ -44,3 +44,5 @@
 .picture {background-size: auto 100%;background-position:center}
 .video {background-image:url(../images/video_bg.png);background-position:center}
 .audio {background-image:url(../images/audio_bg.png);background-position:center}
+.zoomin {background-image:url(../icons/zoomin.png);background-position:center}
+.zoomout {-webkit-mask-image:url(../icons/zoomout.png)}

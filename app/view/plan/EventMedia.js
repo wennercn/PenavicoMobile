@@ -20,8 +20,8 @@
 				store: {
 					fields: ['type', 'url' , 'create_time'],
 					data: [
-						{type: 'audio',  url:"http://10.128.60.49/docs/st/examples/carousel/resources/photos/Food/1.jpg" , create_time:"2012-11-12"} , 
-						{type: 'video',  url:"http://10.128.60.49/docs/st/examples/carousel/resources/photos/Food/1.jpg" , create_time:"2012-11-12"} , 
+						{type: 'audio',  url:"http://10.128.60.49/penavico/ws/mobile/temp/%E8%AF%AD%E9%9F%B30001.amr" , create_time:"2012-11-12"} , 
+						{type: 'video',  url:"http://10.128.60.49/penavico/ws/mobile/temp/BigBuck.m4v" , create_time:"2012-11-12"} , 
 						{type: 'picture',  url:"http://10.128.60.49/docs/st/examples/carousel/resources/photos/Food/1.jpg" , create_time:"2012-11-12"}
 					]
 				},
