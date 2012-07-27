@@ -11,6 +11,7 @@
 		style:"text-align:center" , 
 		items:[{
 				xtype : 'audio',
+				enableControls: true , 
 				margin:"10 0"
 		}]
 	} , 
@@ -31,6 +32,12 @@
 	} , 
 	setAudio: function(media){
 		if (!media) return;
-		this.down("audio").setUrl(media.get("url"));
+		var el = 	this.down("audio");
+		el.setUrl(media.get("url"));
+		el.play();
+		if (el.isPlaying()){
+			this.down("button").setText("点击暂停");
+		}
+
 	}
 })

@@ -10,6 +10,8 @@
 		style:"text-align:center" , 
 		items:[{
 				xtype : 'video',
+				enableControls: true , 
+				loop: true , 
 				flex:1
 		}]
 	} , 
@@ -23,15 +25,20 @@
 			{xtype:"toolbar" , docked:"bottom" , items:[
 				{ text: '点击播放',  flex:1 , xtype: 'button', handler: function() {
 					var container = this.getParent().getParent(),
-					audio = container.down('video');
-					audio.toggle();
-					this.setText(audio.isPlaying() ? '点击暂停' : '点击播放');
+					video = container.down('video');
+					video.toggle();
+					this.setText(video.isPlaying() ? '点击暂停' : '点击播放');
 				}}
 			]}
 		])
 	} , 
 	setVideo: function(media){
 		if (!media) return;
-		this.down("video").setUrl("http://10.128.60.49/penavico/ws/mobile/temp/VIDEO0012.3gp");
+		var el = 	this.down("video");
+		el.setUrl(media.get("url"));
+		el.play();
+		if (el.isPlaying()){
+			this.down("toolbar button").setText("点击暂停");
+		}
 	}
 })
