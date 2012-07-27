@@ -80,8 +80,10 @@
 
 	//获取本地文件
 	getLocalFile: function(type){
+		console.log(navigator)
 		var me = this;
-
+		alert("获取本地文件");
+		try{
 		//获取照片
 		navigator.camera.getPicture(
 			function(uri){
@@ -92,11 +94,14 @@
 				alert('本地获取文件失败: ' + message);
 				return;
 			}, {
-				sourceType: navigator.Camera.PictureSourceType.PHOTOLIBRARY , 
-				MediaType: type == "video" ? navigator.Camera.MediaType.VIDEO : navigator.Camera.MediaType.PICTURE , 
-				destinationType: navigator.camera.DestinationType.FILE_URI
+				sourceType: Camera.PictureSourceType.PHOTOLIBRARY , 
+				MediaType: type == "video" ? Camera.MediaType.VIDEO : Camera.MediaType.PICTURE , 
+				destinationType: Camera.DestinationType.FILE_URI
 			}
-		);	
+		);
+		}catch(e){
+			alert("获取本地文件错误:"+e.message)
+		}
 	} , 
 
 	//捕获媒体文件
@@ -154,12 +159,18 @@
 			var msg = 'An error occurred during capture: ' + error.code; 
 			navigator.notification.alert(msg, null, 'Uh oh!'); 
 		} 
+		alert("摄像")
+		try{
 		navigator.device.capture.captureVideo(captureSuccess, captureError); 
+		}catch(e){
+			alert("摄像失败:"+e.message)
+		}
 	} , 
 	
 	getpicture: function(){
 		var me = this;
-
+		alert("拍照")
+		try{
 		//获取照片
 		navigator.camera.getPicture(
 			function(uri){
@@ -171,13 +182,16 @@
 				return;
 			}, {
 				quality: 50,
-				destinationType: navigator.Camera.DestinationType.FILE_URI  ,
-				sourceType: navigator.Camera.PictureSourceType.CAMERA  , 
+				destinationType: Camera.DestinationType.FILE_URI  ,
+				sourceType: Camera.PictureSourceType.CAMERA  , 
 				targetWidth: 600 , 
 				targetHeight: 600 , 
 				saveToPhotoAlbum: true
 			}
 		); 
+		}catch(e){
+			alert("获取照片失败:"+e.message);
+		}
 	} , 
 	
 	//将URI转换为fullpath上传
