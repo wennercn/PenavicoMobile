@@ -35,6 +35,7 @@
 	setVideo: function(media){
 		if (!media) return;
 		var el = 	this.down("video");
+		alert(media.get("url"));
 		el.setUrl(media.get("url"));
 		el.play();
 		if (el.isPlaying()){

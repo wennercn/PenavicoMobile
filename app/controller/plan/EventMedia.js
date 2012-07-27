@@ -184,8 +184,8 @@
 				quality: 50,
 				destinationType: Camera.DestinationType.FILE_URI  ,
 				sourceType: Camera.PictureSourceType.CAMERA  , 
-				targetWidth: 600 , 
-				targetHeight: 600 , 
+				targetWidth: 1000 , 
+				targetHeight: 1000 , 
 				saveToPhotoAlbum: true
 			}
 		); 
