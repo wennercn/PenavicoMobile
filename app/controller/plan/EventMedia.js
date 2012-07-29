@@ -227,8 +227,8 @@
 		opt.fileKey = "file";
 		opt.mimeType = "text/plain";
 		opt.params = {
-			value1: "isvalue1" , 
-			value2: "isvalue2"
+			type: type , 
+			plan_id: me.getEvent().plan.get("plan_id")
 		}
 
 		var store = this.getMediaList().getStore();
@@ -237,23 +237,23 @@
 			path,
 			encodeURI(wspath+"test.ashx"),
 			function(result) {
-				me.getEvent().setMasked(false);		
-				var ss = [
-					"上传成功:"+result.responseCode , 
-					"大小:"+result.bytesSent , 
-					"返回:"+result.response
-				]
-				alert(ss.join("\n"));
+				me.getEvent().setMasked(false);
+				var bd = Ext.decode(result.response);
+				var ss = "";
+				if (bd.isok){
+					ss = "上传成功(大小:"+result.bytesSent+"!";
+				}else{
+					ss ="上传失败:"+bd.msg;
+				}
+				alert(ss);
 				store.insert(0 , {type:type , url:path})
 			},
 			function(error) {
 				me.getEvent().setMasked(false);
 				var es = [
-					"Error uploading:" , 
+					"上传失败:" , 
 					"path: "+path , 
 					"code: "+error.code , 
-					"source: "+error.source , 
-					"target: "+error.target , 
 					"status: "+error.http_status
 				]
 				alert(es.join("\n"));
