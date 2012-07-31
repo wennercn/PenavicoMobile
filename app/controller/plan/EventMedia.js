@@ -82,7 +82,7 @@
 	getLocalFile: function(type){
 		console.log(navigator)
 		var me = this;
-		alert("获取本地文件");
+		//alert("获取本地文件");
 		try{
 		//获取照片
 		navigator.camera.getPicture(
@@ -131,7 +131,7 @@
 
 		// capture error callback
 		var captureError = function(error) {
-			navigator.notification.alert('Error code: ' + error.code, null, 'Capture Error');
+			navigator.notification.alert('获取录音失败: ' + error.code, null, '失败');
 		};
 
 		// start audio capture
@@ -156,10 +156,9 @@
 
 		// 采集操作出错后的回调函数 
 		function captureError(error) { 
-			var msg = 'An error occurred during capture: ' + error.code; 
-			navigator.notification.alert(msg, null, 'Uh oh!'); 
+			var msg = '摄像失败: ' + error.code; 
+			navigator.notification.alert(msg, null, '失败'); 
 		} 
-		alert("摄像")
 		try{
 		navigator.device.capture.captureVideo(captureSuccess, captureError); 
 		}catch(e){
@@ -169,7 +168,6 @@
 	
 	getpicture: function(){
 		var me = this;
-		alert("拍照")
 		try{
 		//获取照片
 		navigator.camera.getPicture(
@@ -198,7 +196,7 @@
 	getFileToUpload: function(uri , type){
 			var me = this;		
 			window.resolveLocalFileSystemURI(uri, function(file){
-				alert("转换URI:"+file.name+"--"+file.fullPath);
+				//alert("转换URI:"+file.name+"--"+file.fullPath);
 				try{
 				me.uploadFile(file , type);			
 				}catch(e){
@@ -232,6 +230,7 @@
 		}
 
 		var store = this.getMediaList().getStore();
+		var btn_media = this.getEvent().getTabBar().getItems().items[1];
 
 		ft.upload(
 			path,
@@ -241,12 +240,12 @@
 				var bd = Ext.decode(result.response);
 				var ss = "";
 				if (bd.isok){
-					ss = "上传成功(大小:"+result.bytesSent+"!";
+					ss = "上传成功(大小:"+result.bytesSent+")!";
 				}else{
 					ss ="上传失败:"+bd.msg;
 				}
-				alert(ss);
-				store.insert(0 , {type:type , url:path})
+				store.insert(0 , {type:type , url:path});
+				btn_media.setBadgeText(store.getCount())
 			},
 			function(error) {
 				me.getEvent().setMasked(false);

@@ -13,7 +13,9 @@
 			btnSaveEvent: "planEventForm button[action=save]" ,
 			
 			eventMedia: "planEventMedia" ,
-			btnAddMedia: "planEventMedia button[action=addmedia]"
+			btnAddMedia: "planEventMedia button[action=addmedia]" , 
+			
+			mediaView: "planEventMedia dataview"
 
 		},
 		control: {
@@ -68,7 +70,8 @@
 					Ext.Msg.alert("错误" , bd.getErrorInfo());
 					form.setMasked(false);
 				}
-				var rs = Ext.query("RowSet R[p_type='作业进度']" , bd.data);
+				form._xml = Ext.query("workinfo RowSet R" , bd.data)
+				var rs = Ext.query("workinfo RowSet R[p_type='作业进度']" , bd.data);
 				var vs = {};
 				Ext.each(rs , function(n){
 					vs[n.getAttribute("project_name")] = n.getAttribute("project_cont");
@@ -117,6 +120,19 @@
 				project_name: key , 
 				project_cont: value
 			});
+		})		
+			
+		//获取其他的，不变，一起获取
+		Ext.each(form._xml , function(n){
+			console.log(n)
+			if (n.getAttribute("p_type") != pa.ptype){
+				rs.push({
+					plan_id: pa.plan_id , 
+					p_type: n.getAttribute("p_type") , 
+					project_name: n.getAttribute("project_name") , 
+					project_cont: n.getAttribute("project_cont") || ""
+				});
+			}		
 		})
 		var xml = $json2xml(rs , "form");
 		pa.data = escape("<data>"+xml+"</data>");
@@ -151,7 +167,16 @@
 
 				//获取FORM
 		var form = this.getEventForm();
-		form.setMasked({ xtype: 'loadmask'  , message:"读取突发事件信息..."});		
+		form.setMasked({ xtype: 'loadmask'  , message:"读取突发事件信息..."});
+
+		//获取多媒体附件
+		var media = this.getEventMedia();
+		var mediaview = this.getMediaView();
+		media.setMasked({ xtype: 'loadmask'  , message:"读取突发事件附件..."});	
+		//var plan = media.plan;
+		//media.setMasked(false);
+		mediaview.getStore().removeAll()
+
 		var plan = form.plan;
 		Ext.Ajax.request({
 			url: wspath+"workinfo.asmx/GetWorkInfo" , 
@@ -162,13 +187,33 @@
 					Ext.Msg.alert("错误" , bd.getErrorInfo());
 					form.setMasked(false);
 				}
-				var rs = Ext.query("RowSet R[p_type='突发事件']" , bd.data);
+				form._xml = Ext.query("workinfo RowSet R" , bd.data);
+				//form
+				var rs = Ext.query("workinfo RowSet R[p_type='突发事件']" , bd.data);
 				var vs = {};
 				Ext.each(rs , function(n){
 					vs[n.getAttribute("project_name")] = n.getAttribute("project_cont");
 				});
 				form.setValues(vs);
 				form.setMasked(false);
+
+				//附件
+				var ms = Ext.query("media RowSet R" , bd.data);
+				//if (ms.length !="0"){
+					var btn_media = this.getEvent().getTabBar().getItems().items[1];
+					btn_media.setBadgeText(ms.length)
+				//}
+				var ts = [];
+				Ext.each(ms , function(n){
+					var tmp = {};
+					for (var i = 0 ; i<n.attributes.length ; i++ ){
+						tmp[n.attributes[i].name] = n.attributes[i].value;
+					}
+					tmp.url = wspath.replace("ws\/mobile\/" , "") + "docs\/uploadfiles\/events\/" + tmp.file_name;
+					ts.push(tmp);
+				});
+				media.setMasked(false);
+				mediaview.getStore().setData(ts);
 			} , 
 			failure: function(data){
 				Ext.Msg.alert("错误" , data.responseText);
@@ -178,11 +223,7 @@
 		})
 
 		
-		//获取多媒体附件
-		var media = this.getEventMedia();
-		media.setMasked({ xtype: 'loadmask'  , message:"读取突发事件附件..."});	
-		var plan = media.plan;
-		media.setMasked(false);	
+
 	
 	} , 
 
@@ -192,7 +233,7 @@
 		var GC = this.getApplication().GC;
 		var wspath = GC.wspath;
 
-		var form = this.getEvent();
+		var form = this.getEventForm();
 		var vs = form.getValues();
 		var isempty = true;
 		for (var key in vs) {
@@ -218,6 +259,20 @@
 				project_cont: value
 			});
 		})
+		
+		//获取其他的，不变，一起获取
+		Ext.each(form._xml , function(n){
+			console.log(n)
+			if (n.getAttribute("p_type") != pa.ptype){
+				rs.push({
+					plan_id: pa.plan_id , 
+					p_type: n.getAttribute("p_type") , 
+					project_name: n.getAttribute("project_name") , 
+					project_cont: n.getAttribute("project_cont") || ""
+				});
+			}		
+		})
+
 		var xml = $json2xml(rs , "form");
 		pa.data = escape("<data>"+xml+"</data>");
 		

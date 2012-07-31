@@ -3,7 +3,7 @@
 	extend: "Ext.List" , 
 	config: {
 		store: "Plans" , 
-		itemTpl: '<div>{shipname} ({voyage})<p style="font:normal 14px arial;padding-top:5px;color:#999">{etb} ~ {etd}</p></div>',
+		itemTpl: '<div>{shipname} ({voyage})<p style="font:normal 14px arial;padding-top:5px;color:#999">ETB:{etb1} ~ ETD:{etd1}</p></div>',
 		//disclosure: true,
 		//grouped: true,
 		items:[
