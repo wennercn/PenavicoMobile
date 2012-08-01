@@ -1,13 +1,13 @@
 ﻿/**
  * 自动更新
  */
-Ext.define("PenavicoMobile.util.AutoUpate" , {
+Ext.define("PenavicoMobile.util.AutoUpdate" , {
 	singleton: true , 
 	constructor: function() {
-		//this.GC = PenavicoMobile.globolConfig;
-		//this.wspath = this.GC.wspath;
+		this.GC = PenavicoMobile.globolConfig;
+		this.wspath = this.GC.wspath;
 
-		//this.checkUpdate();
+		this.checkUpdate();
     } , 
 	//检测
 	checkUpdate: function(){
@@ -24,7 +24,7 @@ Ext.define("PenavicoMobile.util.AutoUpate" , {
 				this._checkUpdate(version);
 			} , 
 			failure:  function(data){
-				alert(data.responseText);
+				alert("错误:"+data.responseText);
 			} , 
 			scope: this		
 		})	

@@ -71,10 +71,10 @@
 					form.setMasked(false);
 				}
 				form._xml = Ext.query("workinfo RowSet R" , bd.data)
-				var rs = Ext.query("workinfo RowSet R[p_type='作业进度']" , bd.data);
+				var rs = Ext.query("workinfo RowSet R" , bd.data);
 				var vs = {};
 				Ext.each(rs , function(n){
-					vs[n.getAttribute("project_name")] = n.getAttribute("project_cont");
+					vs[n.getAttribute("p_type")+"_"+n.getAttribute("project_name")] = n.getAttribute("project_cont");
 				});
 				form.setValues(vs);
 				form.setMasked(false);
@@ -113,19 +113,21 @@
 		pa.ptype = "作业进度";
 		pa.plan_id = plan.get("plan_id");
 		var rs = [];
+		var names = [];
 		Ext.iterate(vs , function(key , value){
 			rs.push({
 				plan_id: pa.plan_id , 
-				p_type: pa.ptype , 
-				project_name: key , 
+				p_type: key.split("_")[0] , 
+				project_name: key.split("_")[1] , 
 				project_cont: value
 			});
+			names.push(key);
 		})		
 			
 		//获取其他的，不变，一起获取
+		
 		Ext.each(form._xml , function(n){
-			console.log(n)
-			if (n.getAttribute("p_type") != pa.ptype){
+			if (Ext.Array.indexOf(names , n.getAttribute("p_type")+"_"+n.getAttribute("project_name")) == -1){
 				rs.push({
 					plan_id: pa.plan_id , 
 					p_type: n.getAttribute("p_type") , 
@@ -134,9 +136,11 @@
 				});
 			}		
 		})
+		
 		var xml = $json2xml(rs , "form");
 		pa.data = escape("<data>"+xml+"</data>");
-		
+		console.log(xml)
+		//return
 		//保存
 		form.setMasked({ xtype: 'loadmask'  , message:"保存作业进度..."});			
 		Ext.Ajax.request({

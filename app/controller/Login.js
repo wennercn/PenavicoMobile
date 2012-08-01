@@ -38,7 +38,7 @@
 			params: vs , 
 			success: this._checkLogin , 
 			failure: function(data){
-				Ext.Msg.alert("xxx" , data.responseText);
+				alert("登录发生错误:"+data.responseText);
 				this.getForm().setMasked(false);
 			} , 
 			scope: this		

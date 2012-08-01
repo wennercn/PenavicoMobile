@@ -8,8 +8,8 @@ Ext.application({
 		'PenavicoMobile.globolConfig' , 
 		'PenavicoMobile.util.PhoneGap' , 
 		'PenavicoMobile.util.ParseResponse' , 
-		'PenavicoMobile.util.Functions' 
-		//'PenavicoMobile.util.AutoUpdate'
+		'PenavicoMobile.util.Functions' ,
+		'PenavicoMobile.util.AutoUpdate'
     ],
 
 	//自定义内容开始

@@ -13,9 +13,10 @@ Ext.define("PenavicoMobile.view.plan.Progress" ,{
 				layout:"vbox" , 
 				defaults:{ style:"font-size:16px" , height:120} , 
 				items: [
-					{xtype: 'textareafield',label: '计划进度',name: '计划进度'},
-					{xtype: 'textareafield',label: '实际进度',name: '实际进度'}		,
-					{xtype: 'textareafield',label: '备注',name: '备注'}					
+					{xtype: 'textareafield',label: '计划进度',name: '作业进度_计划进度'},
+					{xtype: 'textareafield',label: '实际进度',name: '作业进度_实际进度'} ,
+					{xtype: 'textfield',label: 'ETD',name: 'ETD_ETD' , height:30} ,
+					{xtype: 'textareafield',label: '备注',name: '作业进度_备注'}					
 				]
 			},
 			{xtype: 'button', text: '保存信息' , action:"save" , ui: 'confirm'}
